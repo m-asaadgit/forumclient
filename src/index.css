@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.loader {
+    position: relative;
+    width: 2.5em;
+    height: 2.5em;
+    background-color: transparent;
+    transform: rotate(165deg);
+   }
+   
+   .loader:before, .loader:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: transparent;
+
+    display: block;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 0.25em;
+    transform: translate(-50%, -50%);
+   }
+   
+   .loader:before {
+    animation: before8 2s infinite;
+   }
+   
+   .loader:after {
+    animation: after6 2s infinite;
+   }
+   
+   @keyframes before8 {
+    0% {
+     width: 0.5em;
+     box-shadow: 1em -0.5em rgb(15, 23, 42), -1em 0.5em rgb(203, 213, 225);
+    }
+   
+    35% {
+     width: 2.5em;
+     box-shadow: 0 -0.5em rgb(15, 23, 42), 0 0.5em rgb(203, 213, 225);
+    }
+   
+    70% {
+     width: 0.5em;
+     box-shadow: -1em -0.5em rgb(15, 23, 42), 1em 0.5em rgb(203, 213, 225);
+    }
+   
+    100% {
+     box-shadow: 1em -0.5em rgb(15, 23, 42), -1em 0.5em rgb(203, 213, 225);
+    }
+   }
+   
+   @keyframes after6 {
+    0% {
+     height: 0.5em;
+     box-shadow: 0.5em 1em rgb(2, 12, 35), -0.5em -1em rgb(148, 163, 184);
+    }
+   
+    35% {
+     height: 2.5em;
+     box-shadow: 0.5em 0 rgb(2, 12, 35), -0.5em 0 rgb(148, 163, 184);
+    }
+   
+    70% {
+     height: 0.5em;
+     box-shadow: 0.5em -1em rgb(2, 12, 35), -0.5em 1em rgb(148, 163, 184);
+    }
+   
+    100% {
+     box-shadow: 0.5em 1em rgb(2, 12, 35), -0.5em -1em rgb(148, 163, 184);
+    }
+   }
+   
+   .loader {
+    position: fixed;
+    top: calc(50% - 1.25em);
+    background-color: transparent;
+
+    left: calc(50% - 1.25em);
+   }
+/* src/fonts.css */
+
+@font-face {
+  font-family: 'adam'; /* You can give a custom name to the font */
+  src: url('.\fonts\robo.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.menu-icon span {
+  border-radius: 0.25rem; /* Optional for rounded edges */
+}

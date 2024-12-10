@@ -1,0 +1,71 @@
+import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
+
+export const ApiContext = createContext();
+
+export const ContextAPI = ({ children }) => {
+  const [approvableData, setApprovableData] = useState([]);
+  const [approvedData, setApprovedData] = useState([]);
+  const [SliderIMG, setSliderIMG] = useState([]);
+  const [feedback, setFeedback] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem("token"); // Replace with your token management method
+const [refetch, setRefetch] = useState(false);
+  const headers = { Authorization: `Bearer ${token}` };
+
+  // Fetch data for all APIs
+  const fetchAllData = async () => {
+    setLoading(true);
+    try {
+      const [
+        approvableResponse,
+        approvedResponse,
+        sliderImagesResponse,
+        feedbackResponse,
+      ] = await Promise.all([
+        axios.get("http://localhost:5000/api/auth/approvable", { headers }),
+        axios.get("http://localhost:5000/api/auth/approved"),
+        axios.get("http://localhost:5000/api/auth/getSliderImages"),
+        axios.get("http://localhost:5000/api/auth/getFeedback", { headers }),
+      ]);
+
+      setApprovableData(approvableResponse.data.data);
+      setApprovedData(approvedResponse.data.data);
+      setSliderIMG(sliderImagesResponse.data.data);
+      setFeedback(feedbackResponse.data.data);
+      console.log(approvedData)
+      console.log(SliderIMG)
+      // console.log(SliderIMG)
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Add new slider image
+
+
+  // Fetch all data on mount
+  useEffect(() => {
+    fetchAllData();
+
+  },[refetch]);
+
+  return (
+    <ApiContext.Provider
+      value={{
+        approvableData,
+        approvedData,
+        SliderIMG,
+        feedback,
+        loading,
+        setRefetch,
+        fetchAllData, // To allow manual refresh
+  
+      }}
+    >
+      {children}
+    </ApiContext.Provider>
+  );
+};
