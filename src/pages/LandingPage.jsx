@@ -98,9 +98,7 @@ console.log(approvedData)
     }
   };
 
-  useEffect(() => {
-    // getSliderImages()
-  }, [deleteIMG, handleSubmit]);
+  
 
   return (
     <div className="w-[100%] md:pt-[25vh] pt-[15vh] md:pb-[10vh] md:h-fit  tb:h-[95vh] h-fit relative  pb-20  bg-white">
