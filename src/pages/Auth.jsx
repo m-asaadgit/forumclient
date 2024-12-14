@@ -80,6 +80,7 @@ function Auth() {
               type="email"
               id="email"
               value={email}
+              required={true}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               className="rounded-md border-none w-full h-full px-4 focus:outline-none"
@@ -96,6 +97,8 @@ function Auth() {
               type={showPassword ? "text" : "password"}
               id="password"
               value={password}
+              required={true}
+
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               className="rounded-md border-none w-full h-full px-4 focus:outline-none"
