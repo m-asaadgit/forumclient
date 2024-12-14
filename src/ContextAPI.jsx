@@ -25,17 +25,11 @@ const headers = token ? { Authorization: `Bearer ${token}` } : {};
       ] =  await Promise.all([
         axios.get("https://forumtest.onrender.com/api/auth/approvable", {
           headers,
-          withCredentials: true, // Ensure credentials are sent
         }),
-        axios.get("https://forumtest.onrender.com/api/auth/approved", {
-          withCredentials: true, // Ensure credentials are sent
-        }),
-        axios.get("https://forumtest.onrender.com/api/auth/getSliderImages", {
-          withCredentials: true, // Ensure credentials are sent
-        }),
+        axios.get("https://forumtest.onrender.com/api/auth/approved"),
+        axios.get("https://forumtest.onrender.com/api/auth/getSliderImages"),
         axios.get("https://forumtest.onrender.com/api/auth/getFeedback", {
           headers,
-          withCredentials: true, // Ensure credentials are sent
         }),
       ]);
 
