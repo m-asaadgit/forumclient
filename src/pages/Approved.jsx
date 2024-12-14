@@ -10,7 +10,7 @@ import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import { ApiContext } from "../ContextAPI";
 function Approved() {
-  const {approvedData,fetchAllData,setRefetch}=useContext(ApiContext)
+  const {approvedData,setRefetch}=useContext(ApiContext)
   const navigate = useNavigate();
   // const [approvedData, setApprovedData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -19,13 +19,14 @@ function Approved() {
   const [seeDelete, setSeeDelete] = useState(null);
 
   const token = localStorage.getItem("token");
+  approvedData && console.log(approvedData)
 
 
   const disapproveForm = async (formId) => {
     setLoading(true)
     try {
       await axios.put(
-        `http://localhost:5000/api/auth/delete/${formId}`,
+        `https://forumtest.onrender.com/api/auth/delete/${formId}`,
         {},
         {
           headers: {

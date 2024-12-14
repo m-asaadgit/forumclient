@@ -23,7 +23,7 @@ function MessegePage() {
   const deleteMessege = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/auth/DeleteFeedback/${id}`,
+        `https://forumtest.onrender.com/api/auth/DeleteFeedback/${id}`,
         
         {
           headers: {
@@ -108,7 +108,7 @@ function MessegePage() {
           </div>
         ))
       ) : (
-        <p className="text-white">No feedback data available.</p>
+      <p className="text-black flex items-center justify-center  ">No messeges available.<span className="opacity-0" >s</span>  </p>
       )}
     </div>
   );

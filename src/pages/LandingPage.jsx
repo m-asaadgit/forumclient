@@ -7,9 +7,8 @@ import { MdArrowBack } from "react-icons/md";
 import { ApiContext } from "../ContextAPI";
 
 const LandingPage = () => {
-  const { SliderIMG, approvedData } =
+  const { SliderIMG, setRefetch  } =
     useContext(ApiContext);
-console.log(approvedData)
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -43,7 +42,7 @@ console.log(approvedData)
     try {
       setUploading(true);
       const response = await axios.post(
-        "http://localhost:5000/api/auth/setSliderImages",
+        "https://forumtest.onrender.com/api/auth/setSliderImages",
         formData,
         {
           headers: {
@@ -52,8 +51,8 @@ console.log(approvedData)
           },
         }
       );
-
-      toast.success(response.data.message);
+      setRefetch(prev=>!prev)
+       toast.success(response.data.message);
       
 
       const newSliderImage = response.data.newImage; // Ensure your API response contains the 
@@ -82,13 +81,15 @@ console.log(approvedData)
   const deleteIMG = async (formId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/auth/deleteSliderImage/${formId}`,
+        `https://forumtest.onrender.com/api/auth/deleteSliderImage/${formId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Ensure `token` is defined
           },
         }
       );
+      setRefetch(prev=>!prev)
+
 
 
       toast.warning(response.data.message || "Image deleted  successfully!");

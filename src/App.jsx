@@ -8,7 +8,7 @@ import logo from "../src/assets/logo.jpg";
 import { gsap } from "gsap";
 function App() {
   // const {addSliderImage}=useContext(ContextAPI)
-  const [lander, setLander] = useState(true);
+  const [lander, setLander] = useState(false);
 
   const location = useLocation();
   let path = location.pathname.startsWith("/")
@@ -18,33 +18,33 @@ function App() {
   if (path === "") {
     path = "home";
   }
-  useEffect(() => {
-    const tl = gsap.timeline({
-      onComplete: () => {
-        // setTimeout(() => {
-        setLander(false);
-        // }, 500);
-      },
-    });
-    tl.to(".rotating-img", {
-      rotationY: 720, // Horizontal rotation (X-axis)
-      opacity: 1, // Fade out
-      duration: 2, // 2 seconds duration
-      ease: "power2.inOut", // Smooth easing
-    });
-    tl.from(".animate-text", {
-      y: 100, // Start 100px below
-      opacity: 0, // Fully transparent
-      duration: 1, // Animation duration
-      ease: "power2.out", // Smooth easing
-    });
-    tl.to(".scale-div", {
-      scale: 2, // Start 100px below
-      opacity: 0, // Fully transparent
-      duration: 1, // Animation duration
-      ease: "power2.out", // Smooth easing
-    });
-  }, []);
+  // useEffect(() => {
+  //   const tl = gsap.timeline({
+  //     onComplete: () => {
+  //       // setTimeout(() => {
+  //       setLander(false);
+  //       // }, 500);
+  //     },
+  //   });
+  //   tl.to(".rotating-img", {
+  //     rotationY: 720, // Horizontal rotation (X-axis)
+  //     opacity: 1, // Fade out
+  //     duration: 2, // 2 seconds duration
+  //     ease: "power2.inOut", // Smooth easing
+  //   });
+  //   tl.from(".animate-text", {
+  //     y: 100, // Start 100px below
+  //     opacity: 0, // Fully transparent
+  //     duration: 1, // Animation duration
+  //     ease: "power2.out", // Smooth easing
+  //   });
+  //   tl.to(".scale-div", {
+  //     scale: 2, // Start 100px below
+  //     opacity: 0, // Fully transparent
+  //     duration: 1, // Animation duration
+  //     ease: "power2.out", // Smooth easing
+  //   });
+  // }, []);
 
   if (lander)
     return (

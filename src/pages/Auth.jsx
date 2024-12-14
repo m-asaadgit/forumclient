@@ -18,7 +18,7 @@ function Auth() {
     e.preventDefault();
     setLoader(true)
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/createAdmin', {
+      const response = await axios.post('https://forumtest.onrender.com/api/auth/createAdmin', {
         email,
         password,
       });

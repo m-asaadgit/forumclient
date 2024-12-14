@@ -30,8 +30,8 @@ function Admin() {
         <Link
           to={"/landingPage"}
           className="md:w-[18vw] w-[80%] mx-auto md:mx-0 shadow-2xl shadow-black h-[30vh] text-xl flex justify-center items-center font-semibold tracking-wide text-center rounded-sm py-1 text-white flex-col gap-5 px-2  bg-gray-900"
-        >
-          Landing Page slider
+        >Manage
+           slider
           <TfiLayoutSlider size={40} />{" "}
         </Link>{" "}
         <Link

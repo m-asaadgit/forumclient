@@ -123,7 +123,7 @@ function DetailFiller() {
   
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/createDetail",
+        "https://forumtest.onrender.com/api/auth/createDetail",
         formDataToSubmit,
         {
           headers: { "Content-Type": "multipart/form-data" },

@@ -9,6 +9,7 @@ import { ApiContext } from "../ContextAPI";
 const Home = () => {
   const { SliderIMG } =
   useContext(ApiContext);
+  SliderIMG && console.log(SliderIMG)
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const sliderRef = useRef(null); // For swipe functionality

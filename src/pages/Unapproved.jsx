@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { ApiContext } from "../ContextAPI";
 
 function Unapproved() {
-  const {approvableData,fetchAllData,setRefetch}=useContext(ApiContext)
+  const {approvableData,setRefetch}=useContext(ApiContext)
   
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -31,7 +31,7 @@ function Unapproved() {
   const approveForm = async (formId) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/auth/approve/${formId}`,
+        `https://forumtest.onrender.com/api/auth/approve/${formId}`,
         {},
         {
           headers: {
@@ -52,7 +52,7 @@ function Unapproved() {
   const disapproveForm = async (formId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/auth/disapprove/${formId}`,
+        `https://forumtest.onrender.com/api/auth/disapprove/${formId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Ensure `token` is defined
@@ -482,45 +482,12 @@ function Unapproved() {
                 </p>
               </div>
             )}
-            {/*    <div className="w-[80%] h-[70%]">
-              <img src={selectedItem.img} className="w-full rounded-lg h-full" />
-            </div>
-            <h1 className="text-2xl font-semibold">{selectedItem.name}</h1>
-            <p>
-              <strong>Father Name:</strong> {selectedItem.father}
-            </p>
-            <p>
-              <strong>Age:</strong> {selectedItem.age}
-            </p>
-            <p>
-              <strong>Contact:</strong> {selectedItem.contact}
-            </p>
-            <p>
-              <strong>Email:</strong> {selectedItem.contact}
-            </p>
-            <p>
-              <strong>Occupation:</strong> {selectedItem.occupation || "N/A"}
-            </p>
-            <p>
-              <strong>Tenth:</strong> {selectedItem.tenth}
-            </p>
-            <p>
-              <strong>Twelfth:</strong> {selectedItem.twelfth}
-            </p>
-            <p>
-              <strong>Degree:</strong> {selectedItem.degree}
-            </p>
-            <p>
-              <strong>Employed:</strong> {selectedItem.employed}
-            </p>
-            <p>
-              <strong>Working At:</strong> {selectedItem.workingAt}
-            </p> */}
+       
           </div>
         </div>
       )}
 
-      {approvableData.length > 0 ? (
+      {approvableData?.length > 0 ? (
         approvableData.map((item) => (
           <div
             key={item._id}
@@ -584,7 +551,7 @@ function Unapproved() {
           </div>
         ))
       ) : (
-        <p className="text-white">No unapproved data available.</p>
+     <p className="text-black flex items-center justify-center  ">No data available.<span className="opacity-0" >s</span>  </p>
       )}
     </div>
   );

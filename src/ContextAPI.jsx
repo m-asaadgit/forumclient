@@ -5,15 +5,15 @@ export const ApiContext = createContext();
 
 export const ContextAPI = ({ children }) => {
   const [approvableData, setApprovableData] = useState([]);
+
+
   const [approvedData, setApprovedData] = useState([]);
   const [SliderIMG, setSliderIMG] = useState([]);
   const [feedback, setFeedback] = useState([]);
   const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem("token"); // Replace with your token management method
+  const token = localStorage.getItem("token"); 
 const [refetch, setRefetch] = useState(false);
-  const headers = { Authorization: `Bearer ${token}` };
-
-  // Fetch data for all APIs
+const headers = token ? { Authorization: `Bearer ${token}` } : {};
   const fetchAllData = async () => {
     setLoading(true);
     try {
@@ -23,11 +23,12 @@ const [refetch, setRefetch] = useState(false);
         sliderImagesResponse,
         feedbackResponse,
       ] = await Promise.all([
-        axios.get("http://localhost:5000/api/auth/approvable", { headers }),
-        axios.get("http://localhost:5000/api/auth/approved"),
-        axios.get("http://localhost:5000/api/auth/getSliderImages"),
-        axios.get("http://localhost:5000/api/auth/getFeedback", { headers }),
+        axios.get("https://forumtest.onrender.com/api/auth/approvable", { headers }),
+        axios.get("https://forumtest.onrender.com/api/auth/approved"),
+        axios.get("https://forumtest.onrender.com/api/auth/getSliderImages"),
+        axios.get("https://forumtest.onrender.com/api/auth/getFeedback", { headers }),
       ]);
+
 
       setApprovableData(approvableResponse.data.data);
       setApprovedData(approvedResponse.data.data);
@@ -69,3 +70,5 @@ const [refetch, setRefetch] = useState(false);
     </ApiContext.Provider>
   );
 };
+
+
