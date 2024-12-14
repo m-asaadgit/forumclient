@@ -21,7 +21,8 @@ function About() {
   return (
     <div className="w-[100%] h-fit md:pt-[25vh] pb-[15vh] flex flex-col gap-6 pt-[15vh]  ">
       {data.map((items, index) => (
-        <div className="w-[80%] mx-auto bg-slate-100 shadow-2xl shadow-gray-400 md:h-[400px] h-fit flex flex-col md:flex-row items-center justify-center ">
+        <div                 key={index}
+        className="w-[80%] mx-auto bg-slate-100 shadow-2xl shadow-gray-400 md:h-[400px] h-fit flex flex-col md:flex-row items-center justify-center ">
           <div className="md:w-[30%] md:mx-8 md:h-[90%] pt-[5%] md:py-[5%] h-[180px] tb:h-[360px] tb:w-[60%] w-[80%] mx-auto ">
             <img src="" className="w-full h-full" alt="" />
           </div>

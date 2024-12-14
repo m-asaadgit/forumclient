@@ -37,7 +37,7 @@ const Home = () => {
   // const fetchData = async () => {
   //   try {
   //     const res = await axios.get(
-  //       "http://localhost:5000/api/auth/getSliderImages"
+  //       "http://host:5000/api/auth/getSliderImages"
   //     );
   //     setSliderIMG(res.data.data);
   //   } catch (error) {
@@ -180,7 +180,8 @@ const Home = () => {
 <Link to={"/ld"} className="py-8"> </Link>
       <div className="w-[100%] h-fit md:gap-[10%] px-[5%] flex py-10 flex-wrap justify-center ">
         {data.map((data, index) => (
-          <div className="md:w-[40%] w-[95%] md:h-[250px] h-fit mb-12 flex  flex-col gap-4 py-8  bg-slate-200 px-4 shadow-2xl shadow-[#1a1a36] ">
+          <div                 key={index}
+          className="md:w-[40%] w-[95%] md:h-[250px] h-fit mb-12 flex  flex-col gap-4 py-8  bg-slate-200 px-4 shadow-2xl shadow-[#1a1a36] ">
             <h1 className="md:font-bold font-semibold tracking-wide text-lg text-center ">
               {data.heading}
             </h1>
