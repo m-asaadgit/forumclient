@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { LuGoal } from "react-icons/lu";
-import { IoIosPeople } from "react-icons/io";
+import adamFont from '../fonts/ADAM.CG PRO.otf'; 
+import ubuntuFont from '../fonts/Ubuntu-Regular.ttf';
+import { createGlobalStyle } from 'styled-components';
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,6 +12,18 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 import { ApiContext } from "../ContextAPI";
 import { Timeline } from "gsap/gsap-core";
+const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'adam';
+    src: url(${adamFont}) format('opentype');
+  }
+  @font-face {
+    font-family: 'ub';
+    src: url(${ubuntuFont}) format('truetype');
+  }
+
+  
+`;
 
 const Home = () => {
   const { SliderIMG } = useContext(ApiContext);
@@ -207,7 +221,7 @@ const Home = () => {
         {" "}
       </Link> */}
       <div className="w-[100%] h-fit md:pt-[25vh]  flex flex-col gap-6 pt-8 px-[5%]  ">
-        <header className="px-4 font-adam text-lg font-bold flex flex-col items-center justify-center text-center">
+        <header className="px-4 font-adam text-lg  font-bold flex flex-col items-center justify-center text-center">
           Esteemed Authorities of Nakhuda Jamatul Muslimeen
           <svg
             className="h-2 w-28"
@@ -226,7 +240,7 @@ const Home = () => {
             className="w-[95%] mx-auto bg-slate-100 mb2 shadow-2xl shadow-gray-400 md:h-[400px] h-fit flex flex-col md:flex-row items-center justify-center "
           >
             <div className="md:w-[50%] w-[80%] mx-8 h-[90%] flex flex-col md:gap-4 gap-2 items-center justify-center md:pb-10 pb-2 my-[5%] ">
-              <h1 className="md:text-xl text-sm text-[#1d2d44] text-center capitalize font-adam font-extralight">
+              <h1  className="md:text-xl font-adam text-sm text-[#1d2d44] text-center capitalize  font-extralight">
                 {items.authority}{" "}
               </h1>
               <h1 className="md:text-3xl text-xl text-center font-ub font-extrabold">{items.name}</h1>
@@ -258,7 +272,7 @@ const Home = () => {
             <h1 className="md:font-bold  font-semibold tracking-wide text-md font-adam text-center">
               {item.heading}
             </h1>
-            <h1 className="font-extralight font-ub text-gray-700 text-center">
+            <h1  className="font-extralight font-ub text-gray-700 text-center">
               {item.body}
             </h1>
           </div>
