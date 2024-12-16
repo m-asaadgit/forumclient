@@ -62,7 +62,6 @@ const ImagePage = () => {
         "http://localhost:5000/api/auth/getImagesPage"
       );
       setCMpersonData(response.data.data);
-      console.log(CMpersonData);
     } catch (error) {
       console.error("Error getting slider images:", error);
     }

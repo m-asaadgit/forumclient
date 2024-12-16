@@ -65,7 +65,7 @@ function App() {
     );
 
   return (
-    <div className="min-h-[100vh] relative  w-[100%]">
+    <div className="min-h-[100vh] relative pb-[20vh] w-[100%]">
       <ScrollToTop />
 
       <NavBar />

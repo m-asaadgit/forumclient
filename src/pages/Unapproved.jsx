@@ -42,7 +42,6 @@ function Unapproved() {
       await setRefetch(prev=>!prev);
       toast.success(response.data.message );
 
-      console.log(token);
     } catch (error) {
       console.error("Error approving form:", error);
       alert("Failed to approve form: " + error.message);

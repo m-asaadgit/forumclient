@@ -6,12 +6,11 @@
 // export const ContextAPI = ({ children }) => {
 //   const [approvableData, setApprovableData] = useState([]);
 
-
 //   const [approvedData, setApprovedData] = useState([]);
 //   const [SliderIMG, setSliderIMG] = useState([]);
 //   const [feedback, setFeedback] = useState([]);
 //   const [loading, setLoading] = useState(true);
-//   const token = localStorage.getItem("token"); 
+//   const token = localStorage.getItem("token");
 // const [refetch, setRefetch] = useState(false);
 // const headers = token ? { Authorization: `Bearer ${token}` } : {};
 //   const fetchAllData = async () => {
@@ -33,7 +32,6 @@
 //         }),
 //       ]);
 
-
 //       setApprovableData(approvableResponse.data.data);
 //       setApprovedData(approvedResponse.data.data);
 //       setSliderIMG(sliderImagesResponse.data.data);
@@ -49,7 +47,6 @@
 //   };
 
 //   // Add new slider image
-
 
 //   // Fetch all data on mount
 //   useEffect(() => {
@@ -67,7 +64,7 @@
 //         loading,
 //         setRefetch,
 //         fetchAllData, // To allow manual refresh
-  
+
 //       }}
 //     >
 //       {children}
@@ -94,28 +91,33 @@ export const ContextAPI = ({ children }) => {
     setLoading(true);
     try {
       // API calls that don't require headers (token-based auth)
-      const [approvedResponse, sliderImagesResponse] = await Promise.all([
-        axios.get("https://forumtest.onrender.com/api/auth/approved"),
-        axios.get("https://forumtest.onrender.com/api/auth/getSliderImages"),
-      ]);
-
-      setApprovedData(approvedResponse.data.data);
+     
+      const sliderImagesResponse = await axios.get(
+        "https://forumtest.onrender.com/api/auth/getSliderImages"
+      );
       setSliderIMG(sliderImagesResponse.data.data);
+
+      const approvedResponse = await axios.get(
+        "https://forumtest.onrender.com/api/auth/approved"
+      );
+      setApprovedData(approvedResponse.data.data);
 
       // Only fetch these APIs if the token is available (requires authorization)
       if (token) {
         const [approvableResponse, feedbackResponse] = await Promise.all([
-          axios.get("https://forumtest.onrender.com/api/auth/approvable", { headers }),
-          axios.get("https://forumtest.onrender.com/api/auth/getFeedback", { headers }),
+          axios.get("https://forumtest.onrender.com/api/auth/approvable", {
+            headers,
+          }),
+          axios.get("https://forumtest.onrender.com/api/auth/getFeedback", {
+            headers,
+          }),
         ]);
 
         setApprovableData(approvableResponse.data.data);
         setFeedback(feedbackResponse.data.data);
       }
 
-      console.log(approvedData);
-      console.log(SliderIMG);
-
+    
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -144,5 +146,3 @@ export const ContextAPI = ({ children }) => {
     </ApiContext.Provider>
   );
 };
-
-

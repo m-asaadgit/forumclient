@@ -10,7 +10,10 @@ export default {
         b:"#101028"
       },
       fontFamily: {
-        adam: ['adam', 'sans-serif'], // Reference the custom name you used in the @font-face rule
+        adam: ['adam', 'sans-serif'], 
+        robo: ['robo', 'sans-serif'], 
+        ub: ['ub', 'sans-serif'], 
+
       },
       screens: {
         tb: '760px', // Custom label breakpoint for 760px

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { RxDropdownMenu } from "react-icons/rx";
+import { MdOutlineCastForEducation } from "react-icons/md";
 
 function Nav() {
   const [openMenu, setOpenMenu] = useState(true);
@@ -17,8 +18,8 @@ function Nav() {
   }
   return (
     <div className="flex  top-0  md:h-[20vh] h-[10vh] fixed z-50 bg-[#dadae2]/70 w-full  flex-col items-stretch  md:shadow-black shadow-gray-500 shadow-md ">
-      <div className="absolute md:hidden top-4 left-6 font-bold text-2xl text-b">
-        N S F
+      <div className="absolute md:hidden flex gap-2 items-center top-4 left-6 font-bold text-2xl text-b">
+        N S F <MdOutlineCastForEducation></MdOutlineCastForEducation>
       </div>
       {/* <div className="md:hidden absolute top-4 right-8 ">
         {
@@ -78,7 +79,7 @@ function Nav() {
 
       <div className="md:flex  hidden  w-full px-10  gap-[5%] h-[90%] bg-gradient-to-r bg-[#dadae2]  ">
         <div className="w-[25%] font-extrabold text-7xl tracking-wider flex items-center justify-center text-gray-900   h-[90%]  my-auto">
-          N S F
+          N S F  <MdOutlineCastForEducation></MdOutlineCastForEducation>
         </div>
         <ul className="w-[80%] flex h-[90%] my-auto justify-end items-center gap-[3%]">
           {[

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { MdArrowBack, MdVisibility, MdVisibilityOff } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader";
 import { ApiContext } from "../ContextAPI";
@@ -35,10 +35,8 @@ function Auth() {
         localStorage.setItem("token", response.data.token); // Save JWT in localStorage
 
         navigate("/admin"); // Redirect to admin panel
-        console.log("success");
       }
-      console.log(response);
-      console.log(response.data.message);
+   
 
       // Clear email and password input fields after submission
       setEmail("");
@@ -58,13 +56,12 @@ function Auth() {
   return (
     <div className="flex pt-[25vh] flex-col fixed w-[100%] z-50 gap-4 items-center justify-center h-[80vh] bg-white">
       <div className="md:w-[40%] w-[90%] md:h-[7vh] h-[7vh] tb-h-[5vh] ">
-        <button
-          onClick={() => navigate(-1)}
+        <Link to={"/"}          
           className="bg-gray-900 flex items-center justify-center rounded-sm md:text-2xl tb:text-xl tb:px-10 md:px-3 font-normal gap-2 py-1 hover:bg-black hover:scale-[101%] shadow-md shadow-gray-600 text-white w-fit px-2 pr-4 h-[90%]"
         >
           <MdArrowBack />
           back
-        </button>
+        </Link>
       </div>
       <form
         onSubmit={handleSubmit}
