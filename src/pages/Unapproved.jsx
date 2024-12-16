@@ -31,7 +31,7 @@ function Unapproved() {
   const approveForm = async (formId) => {
     try {
       const response = await axios.put(
-        `https://forumtest.onrender.com/api/auth/approve/${formId}`,
+        `https://forumserver-f93h.onrender.com/api/auth/approve/${formId}`,
         {},
         {
           headers: {
@@ -51,7 +51,7 @@ function Unapproved() {
   const disapproveForm = async (formId) => {
     try {
       const response = await axios.delete(
-        `https://forumtest.onrender.com/api/auth/disapprove/${formId}`,
+        `https://forumserver-f93h.onrender.com/api/auth/disapprove/${formId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Ensure `token` is defined

@@ -22,12 +22,12 @@
 //         sliderImagesResponse,
 //         feedbackResponse,
 //       ] =  await Promise.all([
-//         axios.get("https://forumtest.onrender.com/api/auth/approvable", {
+//         axios.get("https://forumserver-f93h.onrender.com/api/auth/approvable", {
 //           headers,
 //         }),
-//         axios.get("https://forumtest.onrender.com/api/auth/approved"),
-//         axios.get("https://forumtest.onrender.com/api/auth/getSliderImages"),
-//         axios.get("https://forumtest.onrender.com/api/auth/getFeedback", {
+//         axios.get("https://forumserver-f93h.onrender.com/api/auth/approved"),
+//         axios.get("https://forumserver-f93h.onrender.com/api/auth/getSliderImages"),
+//         axios.get("https://forumserver-f93h.onrender.com/api/auth/getFeedback", {
 //           headers,
 //         }),
 //       ]);
@@ -93,22 +93,22 @@ export const ContextAPI = ({ children }) => {
       // API calls that don't require headers (token-based auth)
      
       const sliderImagesResponse = await axios.get(
-        "https://forumtest.onrender.com/api/auth/getSliderImages"
+        "https://forumserver-f93h.onrender.com/api/auth/getSliderImages"
       );
       setSliderIMG(sliderImagesResponse.data.data);
 
       const approvedResponse = await axios.get(
-        "https://forumtest.onrender.com/api/auth/approved"
+        "https://forumserver-f93h.onrender.com/api/auth/approved"
       );
       setApprovedData(approvedResponse.data.data);
 
       // Only fetch these APIs if the token is available (requires authorization)
       if (token) {
         const [approvableResponse, feedbackResponse] = await Promise.all([
-          axios.get("https://forumtest.onrender.com/api/auth/approvable", {
+          axios.get("https://forumserver-f93h.onrender.com/api/auth/approvable", {
             headers,
           }),
-          axios.get("https://forumtest.onrender.com/api/auth/getFeedback", {
+          axios.get("https://forumserver-f93h.onrender.com/api/auth/getFeedback", {
             headers,
           }),
         ]);

@@ -23,7 +23,7 @@ function MessegePage() {
   const deleteMessege = async (id) => {
     try {
       await axios.delete(
-        `https://forumtest.onrender.com/api/auth/DeleteFeedback/${id}`,
+        `https://forumserver-f93h.onrender.com/api/auth/DeleteFeedback/${id}`,
         
         {
           headers: {

@@ -42,7 +42,7 @@ const LandingPage = () => {
     try {
       setUploading(true);
       const response = await axios.post(
-        "https://forumtest.onrender.com/api/auth/setSliderImages",
+        "https://forumserver-f93h.onrender.com/api/auth/setSliderImages",
         formData,
         {
           headers: {
@@ -71,7 +71,7 @@ const LandingPage = () => {
   const deleteIMG = async (formId) => {
     try {
       const response = await axios.delete(
-        `https://forumtest.onrender.com/api/auth/deleteSliderImage/${formId}`,
+        `https://forumserver-f93h.onrender.com/api/auth/deleteSliderImage/${formId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Ensure `token` is defined

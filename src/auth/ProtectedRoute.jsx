@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }) => {
         return;
       }
       try {
-        const response = await axios.get('https://forumtest.onrender.com/api/auth/checkauth', 
+        const response = await axios.get('https://forumserver-f93h.onrender.com/api/auth/checkauth', 
           {
           headers: {
             Authorization: `Bearer ${token}` // Send the token with the request

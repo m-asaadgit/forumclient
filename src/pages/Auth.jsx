@@ -20,7 +20,7 @@ function Auth() {
     setLoader(true);
     try {
       const response = await axios.post(
-        "https://forumtest.onrender.com/api/auth/createAdmin",
+        "https://forumserver-f93h.onrender.com/api/auth/createAdmin",
         {
           email,
           password,

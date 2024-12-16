@@ -26,7 +26,7 @@ function Approved() {
     setLoading(true)
     try {
       await axios.put(
-        `https://forumtest.onrender.com/api/auth/delete/${formId}`,
+        `https://forumserver-f93h.onrender.com/api/auth/delete/${formId}`,
         {},
         {
           headers: {

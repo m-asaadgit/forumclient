@@ -83,21 +83,20 @@
 /* src/fonts.css */
 
 @font-face {
-  font-family: 'robo'; /* You can give a custom name to the font */
-  src: url('.\fonts\robo.ttf') format('opentype');
-
+  font-family: 'robo';
+  src: url('/fonts/robo.ttf') format('opentype');
 }
 
 @font-face {
-  font-family: 'adam'; /* You can give a custom name to the font */
-  src: url('.\fonts\ADAM.CG PRO.otf') format('opentype');
-
+  font-family: 'adam';
+  src: url('/fonts/ADAM.CG PRO.otf') format('opentype');
 }
+
 @font-face {
-  font-family: 'ub'; /* You can give a custom name to the font */
-  src: url('.\fonts\Ubuntu-Regular.ttf') format('opentype');
-
+  font-family: 'ub';
+  src: url('/fonts/Ubuntu-Regular.ttf') format('opentype');
 }
+
 
 .menu-icon span {
   border-radius: 0.25rem; /* Optional for rounded edges */
