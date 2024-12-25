@@ -1,18 +1,16 @@
 
 
-import React, {  useContext, useState } from "react";
+import {  useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 
-import Loader from "../components/Loader";
 import { ApiContext } from "../ContextAPI";
 function PeopleDetails() {
   const {approvedData}=useContext(ApiContext)
 
 //   const [error, setError] = useState(null);
   const [seemore, setSeeMore] = useState(null);
-  const [seeDelete, setSeeDelete] = useState(null);
 
 
 //   if (loading) return <Loader></Loader>;
@@ -24,7 +22,7 @@ function PeopleDetails() {
      
 
       {seemore && (
-        <div className="w-[100vw] fixed z-50  overflow-scroll top-0 right-0 min-h-[100vh] bg-blue-100/50 backdrop-blur-sm">
+        <div className="w-[100vw] fixed z-[2000]  overflow-scroll top-0 right-0 min-h-[100vh] bg-blue-100/50 backdrop-blur-sm">
           <div className="bg-slate-200 fixed z-50  top-[5vh] md:left-[17vw] left-[1.5%] px-2 py-2 md:w-[70vw] w-[97%] min-h-[95vh] rounded-md">
             <Link
               onClick={() => {

@@ -1,29 +1,16 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import  { useState, useEffect, useRef, useContext } from "react";
+import { ApiContext } from "../ContextAPI";
+
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { LuGoal } from "react-icons/lu";
-import adamFont from '../fonts/ADAM.CG PRO.otf'; 
-import ubuntuFont from '../fonts/Ubuntu-Regular.ttf';
-import { createGlobalStyle } from 'styled-components';
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Register the ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
-import { ApiContext } from "../ContextAPI";
-import { Timeline } from "gsap/gsap-core";
-const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: 'adam';
-    src: url(${adamFont}) format('opentype');
-  }
-  @font-face {
-    font-family: 'ub';
-    src: url(${ubuntuFont}) format('truetype');
-  }
+// eslint-disable-next-line no-unused-vars
+import { Timeline } from "gsap/gsap-core"; 
 
-  
-`;
 
 const Home = () => {
   const { SliderIMG } = useContext(ApiContext);
@@ -31,23 +18,26 @@ const Home = () => {
   const [isPaused, setIsPaused] = useState(false);
   const sliderRef = useRef(null); // For swipe functionality
   // const [SliderIMG, setSliderIMG] = useState();
-  const [loading, setLoading] = useState(false);
   const authorytyData = [
     {
       img: "",
       authority: "            President Nakhuda Jamatul Muslimeen Murdeshwar",
-      name: " Mr.Gori Mohammed Meera",
+      name: "MOULANA MOHAMMED IRSHAD TAMMU NADVI",
+    },   {
+      img: "",
+      authority: "           vice-President Nakhuda Jamatul Muslimeen Murdeshwar",
+      name: "UMARA MOHAMMED HUSSAIN",
     },
     {
       img: "",
       authority: "            secretary Nakhuda Jamatul Muslimeen Murdeshwar",
-      name: "Mr. Shamshuddin Umara",
+      name: "Fathaullha Tammu",
     },
-    {
-      img: "",
-      name: "Mr.Gori Mohammed Meera",
-      authority: "Murdeshwar Nakhuda Committee U.A.E",
-    },
+    // {
+    //   img: "",
+    //   name: "Mr.Gori Mohammed Meera",
+    //   authority: "Murdeshwar Nakhuda Committee U.A.E",
+    // },
   ];
   const visionData = [
     {
@@ -101,10 +91,10 @@ const Home = () => {
       if (deltaX < -50) goToNext();
     }
   };
+  const tl = gsap.timeline();
 
   useEffect(() => {
     // Timeline for animations
-    const tl = gsap.timeline();
 
     // Animation for the .slider (triggered immediately on page load)
     tl.from(".slider", {
@@ -220,59 +210,61 @@ const Home = () => {
       {/* <Link to={"/ld"} className="py-8">
         {" "}
       </Link> */}
-      <div className="w-[100%] h-fit md:pt-[25vh]  flex flex-col gap-6 pt-8 px-[5%]  ">
-        <header className="px-4 font-adam text-lg  font-bold flex flex-col items-center justify-center text-center">
+      <div className="w-[100%] h-fit  flex flex-col gap-6 pt-8 md:pt-0 px-[5%]  ">
+        <header className="px-4 font-adam text-lg tb:text-2xl font-bold flex flex-col items-center justify-center text-center">
           Esteemed Authorities of Nakhuda Jamatul Muslimeen
           <svg
-            className="h-2 w-28"
+            className="h-3 w-28 tb:w-32"
             viewBox="0 0 120 50"
             xmlns="http://www.w3.org/2000/svg"
           >
             <polygon
-              points="-80,0 180,0 50,50"
+              points="-100,0 200,0 50,50"
               className="fill-current text-black"
             />
           </svg>
         </header>
-        {authorytyData.map((items, index) => (
+      <div className="flex flex-col md:flex-row flex-wrap gap-6">
+      {authorytyData.map((items, index) => (
           <div
             key={index}
-            className="w-[95%] mx-auto bg-slate-100 mb2 shadow-2xl shadow-gray-400 md:h-[400px] h-fit flex flex-col md:flex-row items-center justify-center "
+            className="w-[95%] md:w-[45%] mx-auto bg-slate-100 mb2 shadow-2xl shadow-gray-400 md:h-[200px] h-fit flex flex-col md:flex-row items-center justify-center "
           >
-            <div className="md:w-[50%] w-[80%] mx-8 h-[90%] flex flex-col md:gap-4 gap-2 items-center justify-center md:pb-10 pb-2 my-[5%] ">
-              <h1  className="md:text-xl font-adam text-sm text-[#1d2d44] text-center capitalize  font-extralight">
+            <div className="w-[80%] mx-8 h-[90%] flex flex-col md:gap-4 gap-2 items-center justify-center md:pb-10 pb-2 my-[5%] ">
+              <h1  className="md:text-xl font-adam text-sm tb:text-lg text-[#1d2d44] text-center capitalize  font-extralight">
                 {items.authority}{" "}
               </h1>
-              <h1 className="md:text-3xl text-xl text-center font-ub font-extrabold">{items.name}</h1>
+              <h1 className="md:text-3xl uppercase text-xl tb:text-3xl text-center font-ub font-extrabold">{items.name}</h1>
             </div>
           </div>
         ))}
       </div>
-      <header className="mt-10  w-fit pb-4 font-semibold gap-0 items-center  text-2xl tracking-wider  font-adam ">
-        <h1 className="flex items-center pb-[1px] ">
-          Vision <LuGoal className="font-bold py-[1px] "></LuGoal>
+      </div>
+      <header className="mt-10  w-fit pb-4 font-semibold gap-0 items-center  text-2xl tb:text-4xl tracking-wider  font-adam ">
+        <h1 className="flex items-center pb-[1px] tb:pb-[3px] ">
+          Vision <LuGoal className="font-bold py-[1px]  "></LuGoal>
         </h1>
         <svg
-          className="h-2 w-28"
+          className="h-2 w-40"
           viewBox="0 0 120 50"
           xmlns="http://www.w3.org/2000/svg"
         >
           <polygon
-            points="-40,0 140,0 50,50"
+            points="-120,0 220,0 50,50"
             className="fill-current text-black"
           />
         </svg>
       </header>
-      <div className="card-container w-[100%] h-fit md:gap-[10%] px-[5%] flex flex-wrap justify-center">
+      <div className=" w-[100%] h-fit md:gap-[10%] px-[5%] flex flex-wrap justify-center">
         {visionData.map((item, index) => (
           <div
             key={index}
-            className="card md:w-[40%] w-[95%] md:h-[250px] h-fit mb-4 flex flex-col gap-4 py-8 bg-slate-100 px-4 shadow-xl shadow-gray-400"
+            className=" md:w-[40%] w-[95%] md:h-[250px] h-fit mb-4 flex flex-col gap-4 py-8 bg-slate-100 px-4 shadow-xl shadow-gray-400"
           >
-            <h1 className="md:font-bold  font-semibold tracking-wide text-md font-adam text-center">
+            <h1 className="md:font-bold  font-semibold tracking-wide text-md tb:text-xl font-adam text-center">
               {item.heading}
             </h1>
-            <h1  className="font-extralight font-ub text-gray-700 text-center">
+            <h1  className="font-extralight font-ub text-md tb:text-xl text-gray-700 text-center">
               {item.body}
             </h1>
           </div>

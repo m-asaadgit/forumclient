@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { MdArrowBack, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -54,10 +54,10 @@ function Auth() {
   if (Loading) return <Loader></Loader>;
 
   return (
-    <div className="flex pt-[25vh] flex-col fixed w-[100%] z-50 gap-4 items-center justify-center h-[80vh] bg-white">
+    <div className="flex md:pt-[5vh] flex-col  fixed w-[100%] z-50 gap-4 items-center justify-center h-[80vh] ">
       <div className="md:w-[40%] w-[90%] md:h-[7vh] h-[7vh] tb-h-[5vh] ">
         <Link to={"/"}          
-          className="bg-gray-900 flex items-center justify-center rounded-sm md:text-2xl tb:text-xl tb:px-10 md:px-3 font-normal gap-2 py-1 hover:bg-black hover:scale-[101%] shadow-md shadow-gray-600 text-white w-fit px-2 pr-4 h-[90%]"
+          className="bg-gray-900 flex items-center justify-center rounded-sm md:text-2xl tb:text-xl tb:px-10 md:px-3 font-ub font-normal gap-2 py-1 hover:bg-black hover:scale-[101%] shadow-md shadow-gray-600 text-white w-fit px-2 pr-4 h-[90%]"
         >
           <MdArrowBack />
           back
@@ -67,8 +67,8 @@ function Auth() {
         onSubmit={handleSubmit}
         className="flex flex-col tb:text-xl md:text-lg  gap-2.5 bg-white h-fit md:h-fit shadow-xl shadow-gray-300 md:p-7 md:w-[40%] p-2 w-[90%] rounded-sm font-sans"
       >
-        <div className="flex flex-col">
-          <label htmlFor="email" className="text-gray-900 font-bold">
+        <div className="flex  flex-col">
+          <label htmlFor="email" className="text-gray-900  font-bold font-ub tracking-wider">
             Email
           </label>
           <div className="border-b-[2px] h-12 tb:h-[80px] md:h-12  flex items-center transition-all ">
@@ -80,13 +80,13 @@ function Auth() {
               required={true}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="rounded-md border-none w-full h-full px-4 focus:outline-none"
+              className="rounded-md border-none w-full  h-full px-4 focus:outline-none"
             />
           </div>
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="password" className="text-gray-900 font-bold">
+          <label htmlFor="password" className="text-gray-900 font-bold font-ub tracking-wider">
             Password
           </label>
           <div className="border-b-[2px]   h-12 tb:h-[80px] md:h-12 flex items-center transition-all  relative">

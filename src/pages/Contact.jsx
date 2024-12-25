@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { MdArrowBack, MdVisibility, MdVisibilityOff } from "react-icons/md";
+import  { useState } from "react";
+import { MdArrowBack } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader";
@@ -54,7 +54,7 @@ function Contact() {
   if (Loading) return <Loader></Loader>;
 
   return (
-    <div className="flex pt-[25vh] flex-col fixed w-[100%] z-30 gap-4 items-center justify-center min-h-[80vh] bg-white">
+    <div className="flex pt-[5vh] flex-col fixed w-[100%] z-30 gap-4 items-center justify-center min-h-[80vh] bg-white">
       <div className="md:w-[40%] w-[90%] h-[7vh]">
         <button
           onClick={() => navigate(-1)}
