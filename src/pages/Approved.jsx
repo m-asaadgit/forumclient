@@ -105,7 +105,7 @@ function Approved() {
 
      
 
-      {filteredData?.length > 0 ? (
+      {data?.length > 0 ? (
         filteredData.map((item) => (
           <div
             key={item._id}
