@@ -127,49 +127,97 @@ function DetailFiller() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    formData.gender = genderSetter;
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     formData.gender = genderSetter;
+// console.log(formData.img)
+//     setloading(true); // Set loading to true as soon as form submission starts
+//     const formDataToSubmit = new FormData();
+//     Object.keys(formData).forEach((key) => {
+//       if (formData[key]) {
+//         formDataToSubmit.append(key, formData[key]);
+//       }
+//     });
 
-    setloading(true); // Set loading to true as soon as form submission starts
-    const formDataToSubmit = new FormData();
-    Object.keys(formData).forEach((key) => {
-      if (formData[key]) {
-        formDataToSubmit.append(key, formData[key]);
-      }
-    });
+//     try {
+//       const response = await axios.post(
+//         `${apiUrl}/api/auth/createDetail`,
+//         formDataToSubmit,
+//         {
+//           headers: { "Content-Type": "multipart/form-data" },
+//         }
+//       );
 
-    try {
-      const response = await axios.post(
-        `${apiUrl}/api/auth/createDetail`,
-        formDataToSubmit,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+//       toast.success("Form successfully send to get approved");
+//       // handleReset()
 
-      toast.success("Form successfully send to get approved");
-      // handleReset()
+//       if (response.data.success) {
+//         // handleReset(); // Uncomment if needed
+//         setloading(false); // Set loading to false on success
+//       }
+//     } catch (error) {
+//       setloading(false); // Set loading to false on error
 
-      if (response.data.success) {
-        // handleReset(); // Uncomment if needed
-        setloading(false); // Set loading to false on success
-      }
-    } catch (error) {
-      setloading(false); // Set loading to false on error
+//       toast.error(
+//         error.response?.data.message ||
+//           "Error submitting form, please try again."
+//       );
 
-      toast.error(
-        error.response?.data.message ||
-          "Error submitting form, please try again."
-      );
-
-      console.error(
-        "Error submitting form:",
-        error.response?.data || error.message
-      );
-    }
-  };
+//       console.error(
+//         "Error submitting form:",
+//         error.response?.data || error.message
+//       );
+//     }
+//   };
   
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  formData.gender = genderSetter;
+
+  // Check the file format before submission
+  const allowedFormats = ["image/jpeg", "image/png", "image/jpg"]; // Add other formats if needed
+  const file = formData.img; // Assuming formData.img is the file object
+  
+  if (file && !allowedFormats.includes(file.type)) {
+    toast.error("Incorrect file format. Please upload a valid image file (JPG, JPEG, PNG).");
+    return; // Prevent form submission
+  }
+
+  console.log(file);
+  setloading(true); // Set loading to true as soon as form submission starts
+
+  const formDataToSubmit = new FormData();
+  Object.keys(formData).forEach((key) => {
+    if (formData[key]) {
+      formDataToSubmit.append(key, formData[key]);
+    }
+  });
+
+  try {
+    const response = await axios.post(
+      `${apiUrl}/api/auth/createDetail`,
+      formDataToSubmit,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+
+    toast.success("Form successfully sent to get approved");
+
+    if (response.data.success) {
+      setloading(false); // Set loading to false on success
+    }
+  } catch (error) {
+    setloading(false); // Set loading to false on error
+
+    toast.error(
+      error.response?.data.message || "Error submitting form, please try again."
+    );
+
+    console.error("Error submitting form:", error.response?.data || error.message);
+  }
+};
+
   useEffect(() => {
     isChecked ? setGenderSetter("male") : setGenderSetter("female");
     handleReset();
