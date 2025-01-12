@@ -7,11 +7,10 @@ import { MdPerson2 } from "react-icons/md";
 
 import Loader from "../components/Loader";
 import { MdArrowBack } from "react-icons/md";
-const pro = "https://forumserver-f93h.onrender.com";
-const dev = "http://localhost:5000";
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
 
 function DetailFiller() {
-  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   console.log(apiUrl)
 
   // const navigate = useNavigate();
@@ -142,7 +141,7 @@ function DetailFiller() {
 
     try {
       const response = await axios.post(
-        `${dev}/api/auth/createDetail`,
+        `${apiUrl}/api/auth/createDetail`,
         formDataToSubmit,
         {
           headers: { "Content-Type": "multipart/form-data" },
