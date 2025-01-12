@@ -67,11 +67,12 @@ function UpapprovedIndivitualDetails() {
     };
   }, []);
 
+  data && console.log(data);
   useEffect(() => {
     console.log(seeApprove, seeDelete);
   }, [seeApprove, seeApprove]);
 
-  return data && data.length >0 ? (
+  return data ? (
     <div className=" bg-white w-[100%]  h-fit pt-[10vh] tb:pt-[12vh] md:pt-[23vh]">
       {seeDelete && !seeApprove && (
         <div className="md:w-[25vw] w-[80%] h-[25vh] flex items-center flex-col justify-center  gap-6 rounded-sm shadow-2xl shadow-slate-900 md:bg-slate-100 bg-slate-300 fixed md:top-[40vh]  md:left-[37vw] top-[30vh] z-[100] ">
