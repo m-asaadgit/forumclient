@@ -75,12 +75,12 @@ if(loading) return <Loader></Loader>
       </Link>
       <Link
         onClick={() => navigate(-1)}
-        className="w-fit px-4 pl-2 flex md:hidden absolute  md:top-[5vh] top-[15vh] left-[5vw] justify-center items-center font-semibold tracking-wide text-center rounded-sm py-1 text-white h-fit bg-gray-900"
+        className="w-fit px-4 pl-2 flex md:hidden fixed  md:top-[5vh] top-[15vh] left-[5vw] justify-center items-center font-semibold tracking-wide text-center rounded-sm py-1 text-white h-fit bg-gray-900"
       >
         <IoIosArrowRoundBack size={25} />
         Back
       </Link>
-      <div className="fixed bg-gray-200 px-4 py-2 rounded-md shadow-lg z-[1000] shadow-zinc-400 flex items-center gap-3 top-[24vh] left-[15vw]">
+      <div className="fixed bg-gray-200 px-4 py-2 rounded-md shadow-lg z-[500]  flex items-center gap-3 md:top-[24vh] md:left-[15vw] top-[14.5vh] left-[35vw] tb:left-[20vw] ">
         <label className="relative inline-flex items-center cursor-pointer">
           <input
             type="checkbox"

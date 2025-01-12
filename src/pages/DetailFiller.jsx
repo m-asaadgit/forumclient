@@ -183,7 +183,6 @@ const handleSubmit = async (e) => {
     return; // Prevent form submission
   }
 
-  console.log(file);
   setloading(true); // Set loading to true as soon as form submission starts
 
   const formDataToSubmit = new FormData();

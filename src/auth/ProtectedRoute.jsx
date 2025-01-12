@@ -3,6 +3,7 @@ import  { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Loader from '../components/Loader';
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 // eslint-disable-next-line react/prop-types
 const ProtectedRoute = ({ children }) => {
@@ -17,7 +18,7 @@ const ProtectedRoute = ({ children }) => {
         return;
       }
       try {
-        const response = await axios.get('https://forumserver-f93h.onrender.com/api/auth/checkauth', 
+        const response = await axios.get(`${apiUrl}/api/auth/checkauth`, 
           {
           headers: {
             Authorization: `Bearer ${token}` // Send the token with the request

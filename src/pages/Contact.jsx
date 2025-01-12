@@ -4,6 +4,7 @@ import {  useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader";
 import { toast } from "react-toastify";
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 function Contact() {
   const [name, setName] = useState("");
@@ -19,7 +20,7 @@ function Contact() {
    
     try {
       const response = await axios.post(
-        "https://forumserver-f93h.onrender.com/api/auth/postFeedback",
+        `${apiUrl}/api/auth/postFeedback`,
         {
           name,
           contact,

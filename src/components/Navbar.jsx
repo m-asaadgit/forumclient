@@ -15,7 +15,7 @@ function Nav() {
   }
 
   return (
-    <div className="flex  top-0  md:h-[20vh] h-[10vh] fixed z-[1000] bg-[#dadae2]/70 w-full   items-center justify-between px-4 tb:px-16 md:px-0  md:shadow-black shadow-gray-500 shadow-md ">
+    <div className="flex  top-0  md:h-[20vh] h-[10vh] fixed z-[1000] bg-[#dadae2] w-full   items-center justify-between px-4 tb:px-16 md:px-0  md:shadow-black shadow-gray-500 shadow-md ">
       <div className=" md:hidden flex gap-2 items-center font-bold text-2xl tb:text-6xl  text-b">
         N S F <MdOutlineCastForEducation></MdOutlineCastForEducation>
       </div>
