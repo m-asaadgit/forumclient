@@ -242,7 +242,7 @@ function UpapprovedIndivitualDetails() {
               <h1 className="font-semibold  ">{data.workingAt}</h1>
             </div>{" "}
             <div className="flex">
-              <h1 className="font-bold   pr-2 ">Workinf as: </h1>
+              <h1 className="font-bold   pr-2 ">Working as: </h1>
               <h1 className="font-semibold ">{data.workingAs}</h1>
             </div>
           </div>

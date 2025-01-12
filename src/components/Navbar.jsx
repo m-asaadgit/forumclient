@@ -1,6 +1,6 @@
 import  { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { MdOutlineCastForEducation } from "react-icons/md";
+import logo from "../assets/logo3.png"
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,8 +16,8 @@ function Nav() {
 
   return (
     <div className="flex  top-0  md:h-[20vh] h-[10vh] fixed z-[1000] bg-[#dadae2] w-full   items-center justify-between px-4 tb:px-16 md:px-0  md:shadow-black shadow-gray-500 shadow-md ">
-      <div className=" md:hidden flex gap-2 items-center font-bold text-2xl tb:text-6xl  text-b">
-        N S F <MdOutlineCastForEducation></MdOutlineCastForEducation>
+      <div className=" md:hidden flex gap-2 items-center font-bold w-[200px] h-[90px] pl-[20px] text-b">
+        <img src={logo} className="w-full h-full" alt="" />
       </div>
       {/* <div className="md:hidden absolute top-4 right-8 ">
         {
@@ -66,9 +66,9 @@ function Nav() {
       )}
 
       <div className="md:flex   hidden  w-full px-10 pb-4 gap-[5%] h-[90%] bg-gradient-to-r bg-[#dadae2]  ">
-        <div className="w-[35%] font-extrabold text-5xl gap-4  tracking-wider flex items-center justify-center text-gray-900   h-[90%]  my-auto">
-          N S F <MdOutlineCastForEducation className="mt-1"></MdOutlineCastForEducation>
-        </div>
+      <div className=" gap-2 items-center font-bold w-[350px] h-[90px]   pl-[20px] text-b">
+        <img src={logo} className="w-full h-full" alt="" />
+      </div>
 
 
 

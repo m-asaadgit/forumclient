@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBack, MdPersonRemove } from "react-icons/md";
 import { FaArrowTrendUp } from "react-icons/fa6";
@@ -12,40 +12,55 @@ import {
 import womenIMG from "../assets/womenLogo.png"
 function Approved() {
   const [isChecked, setIsChecked] = useState(true); // State to hold the checkbox status
-
-  const handleCheckboxChange = (event) => {
-    const isChecked = event.target.checked;
-    setIsChecked(isChecked); // Update the checkbox state
-  };
-  const dispatch = useDispatch();
-
-  // eslint-disable-next-line no-unused-vars
-  const { data, loading, error } = useSelector((state) => state.approvedData);
-  const [filteredData,setFilteredData]=React.useState();
-  const navigate = useNavigate();
+  const [filteredData, setFilteredData] = useState([]);
   const [seeDelete, setSeeDelete] = useState(null);
 
-  const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const disapproveForm = async (formId) => {
-    dispatch(deleteFormFromRedux({ formId, token }));
-  };
+  const { data, loading, error } = useSelector((state) => state.approvedData);
+
+  const token = useMemo(() => localStorage.getItem("token"), []);
+
+  const handleCheckboxChange = useCallback((event) => {
+    const isChecked = event.target.checked;
+    setIsChecked(isChecked); // Update the checkbox state
+  }, []);
+
+  const disapproveForm = useCallback(
+    async (formId) => {
+      dispatch(deleteFormFromRedux({ formId, token }));
+    },
+    [dispatch, token]
+  );
+
+  // Fetch approved data when the component mounts
   useEffect(() => {
     dispatch(fetchApprovedData());
-
-
-
   }, [dispatch]);
 
+  // Filter and sort the data based on checkbox and filled properties
   useEffect(() => {
     if (data) {
+      // Filter the data based on the gender
       const filtered = isChecked
         ? data.filter((item) => item.gender === "male")
         : data.filter((item) => item.gender === "female");
-      setFilteredData(filtered);
+
+      // Sort the filtered data by the number of filled properties
+      const sorted = filtered.sort((a, b) => {
+        const countFilledProperties = (obj) =>
+          Object.values(obj).filter(
+            (value) => value !== null && value !== undefined && value !== ""
+          ).length;
+
+        return countFilledProperties(b) - countFilledProperties(a); // Descending order
+      });
+
+      setFilteredData(sorted);
     }
-    console.log("hey")
   }, [isChecked, data]);
+  filteredData&& console.log(filteredData)
   
   if (loading) return <Loader></Loader>;
 
@@ -105,7 +120,7 @@ function Approved() {
 
      
 
-      {data?.length > 0 ? (
+      {filteredData?.length > 0 ? (
         filteredData?.map((item) => (
           <div
             key={item._id}
