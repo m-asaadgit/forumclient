@@ -322,7 +322,7 @@ function Unapproved() {
           <div className="flex gap-4">
             <Link
               onClick={() => setSeeDelete(null)}
-              className="px-2 bg-blue-500 rounded-sm font-semibold py-1 text-xl"
+              className="px-2 bg-blue-500 rounded-sm font-semibold py-1 flex gap-2 text-xl"
             >
               Cancel
             </Link>
@@ -331,7 +331,7 @@ function Unapproved() {
                 disapproveForm(seeDelete);
                 setSeeDelete(null);
               }}
-              className="px-2 bg-[#f60100] rounded-sm font-semibold py-1 text-xl"
+              className="px-2 bg-[#f60100] rounded-sm font-semibold py-1 flex gap-2 text-xl"
             >
               Delete
             </Link>
@@ -344,7 +344,7 @@ function Unapproved() {
           <div className="flex gap-4">
             <Link
               onClick={() => setSeeApprove(null)}
-              className="px-2 bg-blue-500 rounded-sm font-semibold py-1 text-xl"
+              className="px-2 bg-blue-500 rounded-sm font-semibold py-1 flex gap-2 text-xl"
             >
               Cancel
             </Link>
@@ -353,7 +353,7 @@ function Unapproved() {
                 approveForm(seeApprove);
                 setSeeApprove(null);
               }}
-              className="px-2 bg-green-500 rounded-sm font-semibold py-1 text-xl"
+              className="px-2 bg-green-500 rounded-sm font-semibold py-1 flex gap-2 text-xl"
             >
               Approve
             </Link>
