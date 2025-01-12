@@ -106,7 +106,7 @@ function Approved() {
      
 
       {data?.length > 0 ? (
-        filteredData.map((item) => (
+        filteredData?.map((item) => (
           <div
             key={item._id}
             className="md:w-[32%] w-[90%] tb:w-[47%] mx-auto md:mx-0 mb-[2%] flex md:h-[40vh] h-fit py-2 md:py-0 hover:scale-[101%] transition-all tb:min-h-[250px] duration-150 rounded-sm shadow-2xl shadow-slate-900 bg-gray-900 "
