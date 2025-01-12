@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
-import { MdArrowBack, MdVisibility, MdVisibilityOff } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import {  MdVisibility, MdVisibilityOff } from "react-icons/md";
+import {  useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader";
-import { ApiContext } from "../ContextAPI";
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
 
 function Auth() {
-  const { setRefetch } = useContext(ApiContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,13 +20,12 @@ function Auth() {
     setLoader(true);
     try {
       const response = await axios.post(
-        "https://forumserver-f93h.onrender.com/api/auth/createAdmin",
+        `${apiUrl}/api/auth/createAdmin`,
         {
           email,
           password,
         }
       );
-      await setRefetch((prev) => !prev);
       setLoader(false);
       setMessage(response.data.message);
 
@@ -42,6 +41,8 @@ function Auth() {
       setEmail("");
       setPassword("");
     } catch (error) {
+      setLoader(false);
+
       console.error(
         "Login failed:",
         error.response ? error.response.data.message : error.message
@@ -54,42 +55,34 @@ function Auth() {
   if (Loading) return <Loader></Loader>;
 
   return (
-    <div className="flex md:pt-[5vh] flex-col  fixed w-[100%] z-50 gap-4 items-center justify-center h-[80vh] ">
+    <div className="flex md:pt-[5vh] flex-col  fixed w-[100%]  gap-4 items-center justify-center h-[80vh] ">
       <div className="md:w-[40%] w-[90%] md:h-[7vh] h-[7vh] tb-h-[5vh] ">
-        <Link to={"/"}          
-          className="bg-gray-900 flex items-center justify-center rounded-sm md:text-2xl tb:text-xl tb:px-10 md:px-3 font-ub font-normal gap-2 py-1 hover:bg-black hover:scale-[101%] shadow-md shadow-gray-600 text-white w-fit px-2 pr-4 h-[90%]"
-        >
-          <MdArrowBack />
-          back
-        </Link>
+      
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col tb:text-xl md:text-lg  gap-2.5 bg-white h-fit md:h-fit shadow-xl shadow-gray-300 md:p-7 md:w-[40%] p-2 w-[90%] rounded-sm font-sans"
+        className="flex flex-col gap-2.5 bg-white shadow-xl shadow-gray-300 md:p-7 md:w-[40%] p-2 w-[90%] rounded-sm font-sans"
       >
-        <div className="flex  flex-col">
-          <label htmlFor="email" className="text-gray-900  font-bold font-ub tracking-wider">
-            Email
-          </label>
-          <div className="border-b-[2px] h-12 tb:h-[80px] md:h-12  flex items-center transition-all ">
-            <input
-              autoComplete="current-password"
-              type="email"
-              id="email"
-              value={email}
-              required={true}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="rounded-md border-none w-full  h-full px-4 focus:outline-none"
-            />
-          </div>
-        </div>
+      <div className="flex flex-col">
+       
+       <div className=" border-b-[2px] h-12 flex bg-white items-center transition-all ">
+         <input
+           autoComplete="current-password"
+           type="email"
+           id="email"
+           required={true}
+           value={email}
+           onChange={(e) => setEmail(e.target.value)}
+           placeholder="You name"
+           className="rounded-md border-none bg-white  w-full h-full px-4 outline-none
+ focus:outline-none"
+         />
+       </div>
+     </div>
 
         <div className="flex flex-col">
-          <label htmlFor="password" className="text-gray-900 font-bold font-ub tracking-wider">
-            Password
-          </label>
-          <div className="border-b-[2px]   h-12 tb:h-[80px] md:h-12 flex items-center transition-all  relative">
+   
+          <div className="border-b-[2px]  h-12 flex items-center transition-all  relative">
             <input
               type={showPassword ? "text" : "password"}
               id="password"
@@ -98,7 +91,8 @@ function Auth() {
 
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="rounded-md border-none w-full h-full px-4 focus:outline-none"
+              className="rounded-md outline-none
+ border-b-[1px] w-full h-full px-4 focus:outline-none"
               autoComplete="current-password"
             />
             <button
@@ -119,6 +113,8 @@ function Auth() {
         </button>
         <h1>{message}</h1>
       </form>
+      
+
     </div>
   );
 }

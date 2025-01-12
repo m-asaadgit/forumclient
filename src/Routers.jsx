@@ -1,19 +1,20 @@
-import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import ProtectedRoute from "./auth/ProtectedRoute"; // Import the ProtectedRoute component
 import Admin from "./pages/Admin";
-import PersonInfo from "./links/PersonInfo";
 import DetailFiller from "./pages/DetailFiller";
 import Unapproved from "./pages/Unapproved";
 import Approved from "./pages/Approved";
 import LandingPage from "./pages/LandingPage";
-import About from "./pages/About";
+// import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Loader from "./components/Loader";
 import MessegePage from "./pages/MessegePage";
 import PeopleDetails from "./pages/PeopleDetails";
+import Indivitual from "./indivitualDetails/Indivitual";
+import UpapprovedIndivitualDetails from "./indivitualDetails/UpapprovedIndivitualDetails";
+import ApprovedIndivitualDetails from "./indivitualDetails/ApprovedIndivitualDetails";
 
 function Routers() {
   return (
@@ -21,8 +22,8 @@ function Routers() {
       <Routes>
         <Route path="/login" element={<Auth />} />
         <Route path="/" element={<Home />} />
-        <Route path="/member-info" element={<PeopleDetails />} />
-
+        <Route path="/info/:id" element={<Indivitual />} />
+        <Route path="/member-info" element={<PeopleDetails />}></Route>
         <Route path="/contact" element={<Contact />} />
         <Route path="/ld" element={<Loader />} />
         <Route
@@ -66,6 +67,22 @@ function Routers() {
           element={
             <ProtectedRoute>
               <LandingPage />
+            </ProtectedRoute>
+          }
+        />{" "}
+        <Route
+          path="/unapproved/:id"
+          element={
+            <ProtectedRoute>
+              <UpapprovedIndivitualDetails />
+            </ProtectedRoute>
+          }
+        />{" "}
+        <Route
+          path="/approved/:id"
+          element={
+            <ProtectedRoute>
+              <ApprovedIndivitualDetails />
             </ProtectedRoute>
           }
         />{" "}

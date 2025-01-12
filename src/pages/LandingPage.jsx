@@ -1,38 +1,44 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { RxCross2 } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
-import { ApiContext } from "../ContextAPI";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteSliderIMG, fetchSliderIMG } from "../redux/Slice/SliderIMGSlice";
+import Loader from "../components/Loader";
 
 const LandingPage = () => {
-  const { SliderIMG, setRefetch  } =
-    useContext(ApiContext);
+  const { data, loading, error } = useSelector((state) => state.sliderIMG);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [showDelete, setShowDelete] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
   const [toDeleteData, setToDeleteData] = useState(null);
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
+  const fileInputRef = useRef(null);
 
   const handleImageChange = (e) => {
+    
     const file = e.target.files[0];
     setImage(file);
 
     if (file) {
       const previewUrl = URL.createObjectURL(file);
-      setPreviewImage(previewUrl); // Use a separate state to manage preview URL
+      setPreviewImage(previewUrl);
     }
   };
 
   const token = localStorage.getItem("token");
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
@@ -51,11 +57,12 @@ const LandingPage = () => {
           },
         }
       );
-      setRefetch(prev=>!prev)
-       toast.success(response.data.message);
-      
 
-      const newSliderImage = response.data.newImage; // Ensure your API response contains the 
+      dispatch(fetchSliderIMG());
+      setShowForm(false)
+      toast.success(response.data.message);
+
+       
       setTitle("");
       setDescription("");
       setImage(null);
@@ -67,29 +74,17 @@ const LandingPage = () => {
     }
   };
 
- 
   const deleteIMG = async (formId) => {
-    try {
-      const response = await axios.delete(
-        `https://forumserver-f93h.onrender.com/api/auth/deleteSliderImage/${formId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Ensure `token` is defined
-          },
-        }
-      );
-      setRefetch(prev=>!prev)
-
-
-
-      toast.warning(response.data.message || "Image deleted  successfully!");
-    } catch (error) {
-      console.error("Error disapproving form:", error);
-      alert("Failed to disapprove form: " + error.message);
-    }
+    
+      dispatch(deleteSliderIMG({formId,token}));
   };
-
+  useEffect(() => {
+    dispatch(fetchSliderIMG()).catch((err) => console.error(err));
+  }, [dispatch]);
+  useEffect(() => data && console.log(data), [data]);
   
+  if (loading) return <Loader></Loader>;
+  if (error) return <p>Error: {error.message || "Failed to load data"}</p>;
 
   return (
     <div className="w-[100%] md:pt-[25vh] pt-[15vh] md:pb-[10vh]  md:h-fit  tb:h-[95vh] h-fit relative  pb-20  bg-white">
@@ -146,6 +141,7 @@ const LandingPage = () => {
             </div>
             <div className="flex  px-2   mx-4 w-full">
               <input
+                ref={fileInputRef} // Use the ref here
                 className=" w-[60%]"
                 type="file"
                 placeholder="image"
@@ -154,11 +150,23 @@ const LandingPage = () => {
                 required
               />
               {previewImage && ( // Conditionally render preview image
-                <img
-                  src={previewImage}
-                  className="w-[60px] h-[60px]"
-                  alt="Preview"
-                />
+                <div className="w-[80px] relative flex gap-2">
+                  <img
+                    src={previewImage}
+                    className="w-[890px] h-[60px]"
+                    alt="Preview"
+                  />
+                  <RxCross2
+                    onClick={() => {
+                      setImage(null);
+                      setPreviewImage(null);
+                      if (fileInputRef.current) {
+                        fileInputRef.current.value = ""; // Reset the file input
+                      }
+                    }}
+                    className="absolute text-white bg-black right-0 top-0"
+                  ></RxCross2>
+                </div>
               )}
             </div>
 
@@ -173,10 +181,12 @@ const LandingPage = () => {
         </div>
       )}
       <div className="bg-[#e0e3e7] flex  gap-10 py-8 justify-center mx-auto flex-wrap  my-5 w-[95%] h-fit ">
-        {SliderIMG && SliderIMG.length > 0 ? (
-          SliderIMG.map((item, index) => (
-            <div                 key={index}
-            className="md:min-w-[28%] md:max-w-[28%] tb:w-[70%] relative w-[90%] bg-zinc-100/80 h-[200px]">
+        {data && data.length > 0 ? (
+          data.map((item, index) => (
+            <div
+              key={index}
+              className="md:min-w-[28%] md:max-w-[28%] tb:w-[70%] relative w-[90%] bg-zinc-100/80 h-[200px]"
+            >
               <button
                 onClick={() => {
                   setShowDelete((prev) => !prev);
@@ -226,7 +236,7 @@ const LandingPage = () => {
                 Delete
               </button>
             </div>
-            <div className="w-[130%] h-[120px] bg-green-900">
+            <div className="w-[130%] h-[120px] ">
               <img src={toDeleteData.imgUrl} className="w-full h-full" alt="" />
             </div>
           </div>

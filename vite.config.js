@@ -8,4 +8,9 @@ export default defineConfig({
     outDir: 'dist', // Default output directory
     sourcemap: true, // Optional: enable sourcemaps for debugging production builds
   },
+    server: {
+      host: '0.0.0.0',
+      port: 5173,
+    },
+  
 });

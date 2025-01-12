@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { TbDatabaseExclamation } from "react-icons/tb";
 import { TbDatabaseEdit } from "react-icons/tb";
+import { BsChatSquareText } from "react-icons/bs";
+
 import { TfiLayoutSlider } from "react-icons/tfi";
-import { IoImagesSharp } from "react-icons/io5";
-import Loader from "../components/Loader";
 
 function Admin() {
 
@@ -39,7 +37,7 @@ function Admin() {
           className="md:w-[18vw] w-[80%] mx-auto md:mx-0 shadow-2xl shadow-black h-[30vh] text-xl flex justify-center items-center font-semibold tracking-wide text-center rounded-sm py-1 text-white flex-col gap-5 px-2  bg-gray-900"
         >
           Manage messeges
-          <TfiLayoutSlider size={40} />{" "}
+          <BsChatSquareText size={40} />{" "}
         </Link>
         {/* <Link
           to={"/ImagePage"}

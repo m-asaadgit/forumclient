@@ -1,6 +1,6 @@
 import  { useState } from "react";
 import { MdArrowBack } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader";
 import { toast } from "react-toastify";
@@ -29,7 +29,7 @@ function Contact() {
       setLoader(false);
       setMessage(response.data.message);
 
-     toast.success(message);
+     toast.success(response.data.message);
 
 
       // Clear email and password input fields after submission
@@ -99,6 +99,7 @@ function Contact() {
               autoComplete="current-password"
             />
           </div>
+
         </div>{" "}
         <div className="flex flex-col">
        

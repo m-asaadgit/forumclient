@@ -5,11 +5,15 @@ import NavBar from "../src/components/Navbar";
 import ScrollToTop from "./utlis/ScrollToTop";
 import Footer from "./components/Footer";
 import logo from "../src/assets/logo.jpg";
-import { gsap } from "gsap";
+import { useDispatch, useSelector } from "react-redux";
+import {fetchApprovableData } from "./redux/Slice/approvableDataSlice"
+// import { gsap } from "gsap";
 function App() {
   // const {addSliderImage}=useContext(ContextAPI)
   const [lander, setLander] = useState(false);
+const dispatch=useDispatch()
 
+  const { data } = useSelector((state) => state.approvableData);
   const location = useLocation();
   let path = location.pathname.startsWith("/")
     ? location.pathname.slice(1)
@@ -46,6 +50,11 @@ function App() {
   //   });
   // }, []);
 
+  // useEffect(() => {
+  //   dispatch(fetchApprovableData());
+  //    data&& console.log(data)
+  // },);
+
   if (lander)
     return (
       <div className="h-[100vh] w-full bg-slate-200">
@@ -65,7 +74,7 @@ function App() {
     );
 
   return (
-    <div className="min-h-[100vh] relative pb-[20vh] w-[100%]">
+    <div className="min-h-[100vh] relative md:pb-[20vh] tb:pb-[13vh] pb-[18vh] w-[100%]">
       <ScrollToTop />
 
       <NavBar />
