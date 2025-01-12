@@ -319,7 +319,7 @@ function Unapproved() {
       {seeDelete && !seeApprove && (
         <div className="md:w-[25vw] w-[80%] h-[25vh] flex items-center flex-col justify-center gap-6 rounded-sm shadow-2xl shadow-slate-900 md:bg-slate-100 bg-slate-300 fixed md:top-[20vh] top-[30vh] z-[100] ">
           <h1 className="font-semibold">Want to delete ? </h1>
-          <div>
+          <div className="flex gap-4">
             <Link
               onClick={() => setSeeDelete(null)}
               className="px-2 bg-blue-500 rounded-sm font-semibold py-1 text-xl"
@@ -341,7 +341,7 @@ function Unapproved() {
       {seeApprove && !seeDelete && (
         <div className="md:w-[25vw] w-[80%] bg-slate-300 h-[25vh] flex items-center flex-col justify-center gap-6 rounded-sm shadow-2xl shadow-slate-900 md:bg-slate-100 fixed md:top-[20vh] top-[30vh] z-[100] ">
           <h1 className="font-semibold">Want to Approve ? </h1>
-          <div>
+          <div className="flex gap-4">
             <Link
               onClick={() => setSeeApprove(null)}
               className="px-2 bg-blue-500 rounded-sm font-semibold py-1 text-xl"
@@ -413,13 +413,13 @@ function Unapproved() {
                 <Link
                   onClick={() => setSeeApprove(item._id)}
                   className="w-[48%] text-white text-xl bg-green-500 py-[5px] text-center font-semibold rounded-sm hover:scale-[101%] transition-all"
-                >
+                >Approve
                   <MdPersonAddAlt1 size={28} />
                 </Link>
                 <Link
                   onClick={() => setSeeDelete(item._id)}
                   className="w-[48%] text-white text-xl bg-red-500 py-[5px] text-center font-semibold rounded-sm hover:scale-[101%] transition-all"
-                >
+                >Delete
                   <MdPersonRemove size={28} />
                 </Link>
               </div>
