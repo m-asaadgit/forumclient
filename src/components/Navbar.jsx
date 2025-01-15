@@ -1,6 +1,7 @@
-import  { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../assets/logo3.png"
+import logo from "../assets/logo.png";
+import gsap from "gsap";
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -13,10 +14,20 @@ function Nav() {
   if (path === "") {
     path = "home";
   }
-
+  useEffect(() => {
+    // GSAP animation for the navbar
+    gsap.from(".navbar", {
+      y: -100, // Start position 100px above
+      opacity: 0, // Fully transparent
+      duration: 1, // Animation duration
+      ease: "power2.out", // Smooth easing
+    });
+  }, []);
   return (
-    <div className="flex  top-0  md:h-[20vh] h-[10vh] fixed z-[1000] bg-[#dadae2] w-full   items-center justify-between px-4 tb:px-16 md:px-0  md:shadow-black shadow-gray-500 shadow-md ">
-      <div className=" md:hidden flex gap-2 items-center font-bold w-[200px] h-[90px] pl-[20px] text-b">
+<div className="flex  navbar top-0 md:h-[20vh] h-[10vh] fixed z-[1000] w-full bg-gradient-to-b from-white to-slate-300 items-center justify-between px-4 tb:px-16 md:px-0 md:shadow-slate-400 shadow-gray-500 shadow-md">
+
+
+      <div className=" md:hidden flex gap-2 items-center font-bold w-[130px] h-[80px] pl-[20px] text-b">
         <img src={logo} className="w-full h-full" alt="" />
       </div>
       {/* <div className="md:hidden absolute top-4 right-8 ">
@@ -65,15 +76,10 @@ function Nav() {
         </div>
       )}
 
-      <div className="md:flex   hidden  w-full px-10 pb-4 gap-[5%] h-[90%] bg-gradient-to-r bg-[#dadae2]  ">
-      <div className=" gap-2 items-center font-bold w-[350px] h-[90px]   pl-[20px] text-b">
-        <img src={logo} className="w-full h-full" alt="" />
-      </div>
-
-
-
-
-
+      <div className="md:flex   hidden  w-full px-10  gap-[5%] h-[90%]   ">
+        <div className=" gap-2 items-center font-bold w-[150px] h-full  mb-[10vh]   pl-[20px] text-b">
+          <img src={logo} className="w-full  h-full" alt="" />
+        </div>
 
         <ul className="w-[80%] flex h-[90%] my-auto justify-end items-center gap-[3%]">
           {[
@@ -93,9 +99,9 @@ function Nav() {
           ))}
         </ul>
       </div>
-      <h1 className="px-5 md:flex absolute bottom-0 w-full tb:hidden hidden font-thin text-white  bg-[#101028]   tracking-wide text-xl">
+      {/* <h1 className="px-5 md:flex absolute bottom-0 w-full tb:hidden hidden font-thin text-white  bg-[#101028]   tracking-wide text-xl">
         {path}
-      </h1>
+      </h1> */}
     </div>
   );
 }
