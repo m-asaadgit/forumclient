@@ -125,7 +125,7 @@ const LandingPage = () => {
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                required
+                // required
               />
             </div>
             <div>
@@ -136,7 +136,7 @@ const LandingPage = () => {
                 className="bg-slate-100 px-2  w-[80%] mx-4 focus:outline-none"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                required
+                // required
               />
             </div>
             <div className="flex  px-2   mx-4 w-full">
