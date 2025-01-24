@@ -7,6 +7,8 @@ import { MdArrowBack } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteSliderIMG, fetchSliderIMG } from "../redux/Slice/SliderIMGSlice";
 import Loader from "../components/Loader";
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
 
 const LandingPage = () => {
   const { data, loading, error } = useSelector((state) => state.sliderIMG);
@@ -48,7 +50,7 @@ const LandingPage = () => {
     try {
       setUploading(true);
       const response = await axios.post(
-        "https://forumserver-f93h.onrender.com/api/auth/setSliderImages",
+        `${apiUrl}/api/auth/setSliderImages`,
         formData,
         {
           headers: {

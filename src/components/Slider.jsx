@@ -95,10 +95,12 @@ function Slider({ data, setDot }) {
             className="w-full h-full object-contain rounded-lg"
           />
           <div className="absolute left-4 px-4 bottom-4">
-            <h1 className="bg-b/50 mb-2 w-fit font-semibold text-gray-200">
+            <h1 className="bg-b/50 mb-2 w-fit font-semibold text-sm text-gray-200">
               {item.title}
             </h1>
-            <h1 className="bg-b/50 text-justify text-sm text-gray-400">
+            <h1 className="bg-b/50 md:flex hidden text-justify text-sm text-gray-400">
+              {item.description.slice(0, 430)}...
+            </h1><h1 className="bg-b/50 md:hidden flex text-justify text-sm text-gray-400">
               {item.description.slice(0, 130)}...
             </h1>
           </div>

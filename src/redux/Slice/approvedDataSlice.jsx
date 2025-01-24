@@ -13,7 +13,6 @@ export const fetchApprovedData = createAsyncThunk(
       const response = await axios.get(`${apiUrl}/api/auth/approved`,{
         headers
       });
-      // console.log(response.data.data);
       return response.data.data; // Assuming this is the
       // payload you want to return
     } catch (error) {

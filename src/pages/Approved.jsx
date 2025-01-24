@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBack, MdPersonRemove } from "react-icons/md";
 import { FaArrowTrendUp } from "react-icons/fa6";
@@ -18,7 +18,7 @@ function Approved() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { data, loading, error } = useSelector((state) => state.approvedData);
+  const { data, loading } = useSelector((state) => state.approvedData);
 
   const token = useMemo(() => localStorage.getItem("token"), []);
 
@@ -60,7 +60,6 @@ function Approved() {
       setFilteredData(sorted);
     }
   }, [isChecked, data]);
-  filteredData&& console.log(filteredData)
   
   if (loading) return <Loader></Loader>;
 
@@ -171,7 +170,6 @@ function Approved() {
                   onClick={() => {
                     setSeeDelete(null);
                     setSeeDelete(item);
-                    //  console.log(seeDelete)
                   }}
                   className="bg-[#f60100] text-black px-4 hover:scale-110 transition-all duration-200 md:px-2 shadow-2xl shadow-slate-900 font-semibold h-fit py-1 w-fit mt-2 flex gap-1 justify-center items-center rounded-sm"
                 >

@@ -32,8 +32,7 @@ function MessegePage() {
       dispatch(fetchFeedback());
       toast.success("Feedback deleted successfully");
     } catch (error) {
-      console.error("Error deleting feedback:", error);
-      toast.error("Feedback not deleted ");
+      toast.error("Feedback not deleted ",error);
 
     }
   };

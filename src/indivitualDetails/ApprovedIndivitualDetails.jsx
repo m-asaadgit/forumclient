@@ -44,7 +44,7 @@ function ApprovedIndivitualDetails() {
       // Set the data received from the response
       setData(response.data.data);
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Error:", error);
     }
   };
 

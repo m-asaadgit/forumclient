@@ -15,7 +15,6 @@ export const fetchApprovableData = createAsyncThunk(
       });
       return response.data.data;
     } catch (error) {
-      console.log(error+"en")
       return rejectWithValue(
         error.response ? error.response.data : "Unknown error"
       );

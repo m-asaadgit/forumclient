@@ -11,7 +11,7 @@ import LandingPage from "./pages/LandingPage";
 import Contact from "./pages/Contact";
 import Loader from "./components/Loader";
 import MessegePage from "./pages/MessegePage";
-import PeopleDetails from "./pages/PeopleDetails";
+// import PeopleDetails from "./pages/PeopleDetails";
 import Indivitual from "./indivitualDetails/Indivitual";
 import UpapprovedIndivitualDetails from "./indivitualDetails/UpapprovedIndivitualDetails";
 import ApprovedIndivitualDetails from "./indivitualDetails/ApprovedIndivitualDetails";
@@ -23,7 +23,6 @@ function Routers() {
         <Route path="/login" element={<Auth />} />
         <Route path="/" element={<Home />} />
         <Route path="/info/:id" element={<Indivitual />} />
-        <Route path="/member-info" element={<PeopleDetails />}></Route>
         <Route path="/contact" element={<Contact />} />
         <Route path="/ld" element={<Loader />} />
         <Route

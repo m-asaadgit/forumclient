@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { RxCross2 } from "react-icons/rx";
@@ -8,6 +8,7 @@ const ImagePage = () => {
   const [name, setName] = useState("");
   const [authority, setAuthority] = useState("");
   const [uploading, setUploading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [showDelete, setShowDelete] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [CMpersonData, setCMpersonData] = useState();
@@ -49,8 +50,7 @@ const ImagePage = () => {
       );
       toast.success(response.data.message);
     } catch (error) {
-      console.error("Error uploading the image:", error);
-      alert("Failed to upload image");
+      toast.error("Error uploading the image:", error);
     } finally {
       setUploading(false);
     }
@@ -63,7 +63,7 @@ const ImagePage = () => {
       );
       setCMpersonData(response.data.data);
     } catch (error) {
-      console.error("Error getting slider images:", error);
+      toast.error("Error getting slider images:", error);
     }
   };
   const deleteIMG = async (formId) => {
@@ -79,8 +79,7 @@ const ImagePage = () => {
 
       toast.warning(response.data.message || "Image deleted  successfully!");
     } catch (error) {
-      console.error("Error disapproving form:", error);
-      alert("Failed to disapprove form: " + error.message);
+      toast.error("Error disapproving form:", error);
     }
   };
 
@@ -166,7 +165,7 @@ const ImagePage = () => {
       <div className="bg-[#8d99ae] flex gap-10 py-8 justify-center mx-auto flex-wrap  my-5 w-[95%] h-fit ">
         {CMpersonData && CMpersonData.length > 0? 
           CMpersonData.map((item, index) => (
-            <div className="min-w-[28%] max-w-[28%] relative  bg-zinc-200/90 h-[200px]">
+            <div key={index} className="min-w-[28%] max-w-[28%] relative  bg-zinc-200/90 h-[200px]">
               <button
                 onClick={() => {
                   setShowDelete((prev) => !prev);

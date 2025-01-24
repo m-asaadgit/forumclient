@@ -7,7 +7,6 @@ export const maleFetchApprovedData = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${apiUrl}/api/auth//male/approved`);
-      console.log("mal" );
       return response.data.data; // Assuming this is the
       // payload you want to return
     } catch (error) {

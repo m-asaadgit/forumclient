@@ -10,6 +10,7 @@ function Contact() {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [feedback, setFeedback] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [message, setMessage] = useState("");
   const [Loading, setLoader] = useState(false);
   const navigate = useNavigate();
@@ -36,8 +37,8 @@ function Contact() {
       // Clear email and password input fields after submission
      
     } catch (error) {
-      console.error(
-        "Login failed:",
+      toast.error(
+      
         error.response ? error.response.data.message : error.message
       );
      
@@ -49,14 +50,13 @@ function Contact() {
       setMessage(
         error.response ? error.response.data.message : "An error occurred"
       );
-      toast.warn(message)
     }
   };
   if (Loading) return <Loader></Loader>;
 
   return (
-    <div className="flex pt-[5vh] flex-col fixed w-[100%] z-30 gap-4 items-center justify-center min-h-[80vh] bg-white">
-      <div className="md:w-[40%] w-[90%] h-[7vh]">
+    <div className="flex pt-[8vh]  flex-col fixed w-[100%] z-30 gap-4 items-center justify-center min-h-[80vh] bg-white">
+      <div className="md:hidden w-[90%] h-[7vh]">
         <button
           onClick={() => navigate(-1)}
           className="bg-gray-900 flex items-center justify-center rounded-sm md:text-2xl font-normal gap-2 py-1 hover:bg-black hover:scale-[101%] shadow-md shadow-gray-600 text-white w-fit px-2 pr-4 h-[90%]"

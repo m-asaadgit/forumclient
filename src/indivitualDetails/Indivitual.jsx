@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -5,6 +6,7 @@ import Loader from "../components/Loader";
 import img from "../assets/womenLogo.png";
 import { MdArrowBack } from "react-icons/md";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { toast } from "react-toastify";
 
 function Indivitual() {
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ function Indivitual() {
       );
       setData(response.data.data);
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Error:", error);
     }
   };
 

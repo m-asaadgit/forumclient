@@ -55,7 +55,7 @@ function UpapprovedIndivitualDetails() {
       // Set the data received from the response
       setData(response.data.data);
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Error:", error);
     }
   };
 
@@ -67,10 +67,7 @@ function UpapprovedIndivitualDetails() {
     };
   }, []);
 
-  data && console.log(data);
-  useEffect(() => {
-    console.log(seeApprove, seeDelete);
-  }, [seeApprove, seeApprove]);
+  
 
   return data ? (
     <div className=" bg-white w-[100%]  h-fit pt-[10vh] tb:pt-[12vh] md:pt-[23vh]">

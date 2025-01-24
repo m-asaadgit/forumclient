@@ -412,15 +412,15 @@ function Unapproved() {
               <div className="w-full h-[25%] flex flex-col md:flex-row items-center md:items-start justify-start px-2 gap-2">
                 <Link
                   onClick={() => setSeeApprove(item._id)}
-                  className="w-[48%] text-white text-xl md:text-lg px-2 flex gap-2 bg-green-500 py-[5px] text-center font-semibold rounded-sm hover:scale-[101%] transition-all"
+                  className="w-[48%] text-white text-xl md:text-sm flex items-center px-2  gap-2 bg-green-500 py-[5px] text-center font-semibold rounded-sm hover:scale-[101%] transition-all"
                 >Approve
                   <MdPersonAddAlt1 size={28} />
                 </Link>
                 <Link
                   onClick={() => setSeeDelete(item._id)}
-                  className="w-[48%] text-white text-xl md:text-lg px-2 flex gap-2 bg-red-500 py-[5px] text-center font-semibold rounded-sm hover:scale-[101%] transition-all"
+                  className="w-[48%] text-white  md:text-sm flex items-center px-2  text-xl md:text-lg px-2 flex gap-2 bg-red-500 py-[5px] text-center font-semibold rounded-sm hover:scale-[101%] transition-all"
                 >Delete
-                  <MdPersonRemove size={28} />
+                  <MdPersonRemove size={20} />
                 </Link>
               </div>
             </div>

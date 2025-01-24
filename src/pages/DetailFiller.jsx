@@ -11,7 +11,6 @@ const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 
 function DetailFiller() {
-  console.log(apiUrl)
 
   // const navigate = useNavigate();
   const [laoding, setloading] = useState(false);
@@ -20,7 +19,6 @@ function DetailFiller() {
   const [genderSetter, setGenderSetter] = useState("male");
   const handleCheckboxChange = (event) => {
     const isChecked = event.target.checked;
-    console.log(isChecked);
     setIsChecked(isChecked); // Update the checkbox state
   };
 
@@ -127,49 +125,6 @@ function DetailFiller() {
     });
   };
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     formData.gender = genderSetter;
-// console.log(formData.img)
-//     setloading(true); // Set loading to true as soon as form submission starts
-//     const formDataToSubmit = new FormData();
-//     Object.keys(formData).forEach((key) => {
-//       if (formData[key]) {
-//         formDataToSubmit.append(key, formData[key]);
-//       }
-//     });
-
-//     try {
-//       const response = await axios.post(
-//         `${apiUrl}/api/auth/createDetail`,
-//         formDataToSubmit,
-//         {
-//           headers: { "Content-Type": "multipart/form-data" },
-//         }
-//       );
-
-//       toast.success("Form successfully send to get approved");
-//       // handleReset()
-
-//       if (response.data.success) {
-//         // handleReset(); // Uncomment if needed
-//         setloading(false); // Set loading to false on success
-//       }
-//     } catch (error) {
-//       setloading(false); // Set loading to false on error
-
-//       toast.error(
-//         error.response?.data.message ||
-//           "Error submitting form, please try again."
-//       );
-
-//       console.error(
-//         "Error submitting form:",
-//         error.response?.data || error.message
-//       );
-//     }
-//   };
-  
 const handleSubmit = async (e) => {
   e.preventDefault();
   formData.gender = genderSetter;
@@ -213,7 +168,6 @@ const handleSubmit = async (e) => {
       error.response?.data.message || "Error submitting form, please try again."
     );
 
-    console.error("Error submitting form:", error.response?.data || error.message);
   }
 };
 
@@ -231,7 +185,7 @@ const handleSubmit = async (e) => {
         <MdArrowBack />
         back
       </Link>
-      <div className="absolute  bg-gray-200 px-4 py-2 rounded-md shadow-lg z-[1000] shadow-zinc-400 flex items-center gap-3 md:top-5 top-[12vh] md:left-[15vw] left-[5vw]">
+      <div className="absolute  bg-gray-200 px-4 py-2 rounded-md shadow-lg z-[500] shadow-zinc-400 flex items-center gap-3 md:top-5 top-[12vh] md:left-[15vw] left-[5vw]">
         <label className="relative inline-flex items-center cursor-pointer">
           <input
             type="checkbox"

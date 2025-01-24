@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 import  { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -32,7 +33,6 @@ const ProtectedRoute = ({ children }) => {
           setIsAuthenticated(false);
         }
       } catch (error) {
-        console.error('Token verification failed:', error);
         setIsAuthenticated(false);
       }
     };

@@ -24,7 +24,7 @@ function Nav() {
     });
   }, []);
   return (
-<div className="flex  navbar top-0 md:h-[20vh] h-[10vh] fixed z-[1000] w-full bg-gradient-to-b from-white to-slate-300 items-center justify-between px-4 tb:px-16 md:px-0 md:shadow-slate-400 shadow-gray-500 shadow-md">
+<div className="flex  navbar top-0 md:h-[20vh] h-[10vh] fixed z-[1000] w-full bg-gradient-to-t from-white to-slate-300 items-center justify-between px-4 tb:px-16 md:px-0 md:shadow-slate-400 shadow-gray-500 shadow-md">
 
 
       <div className=" md:hidden flex gap-2 items-center font-bold w-[130px] h-[80px] pl-[20px] text-b">
@@ -56,11 +56,11 @@ function Nav() {
         ></span>
       </div>
       {isOpen && (
-        <div className=" md:hidden  flex items-center  absolute top-[10vh] pl-4 right-0 w-[100%] text-center h-fit py-2 pb-4 bg-b flex-col gap-3 ">
+        <div className=" md:hidden  flex items-center  absolute top-[10vh] pl-4 right-0 w-[100%] text-center h-fit py-2 pb-4 bg-b z-[100000]   flex-col gap-3 ">
           {[
             { to: "/", label: "Home" },
             { to: "/fill-form", icon: ``, label: "Fill Your Profile" },
-            { to: "/member-info", icon: ``, label: "Member Info" },
+            // { to: "/member-info", icon: ``, label: "Member Info" },
             { to: "/login", icon: ``, label: "Administrator Sign In" },
             { to: "/contact", icon: ``, label: "Contact Us" },
           ].map((link, index) => (
@@ -85,7 +85,7 @@ function Nav() {
           {[
             { to: "/", label: "Home" },
             { to: "/fill-form", label: "Fill Your Profile" },
-            { to: "/member-info", label: "Member Info" },
+            // { to: "/member-info", label: "Member Info" },
             { to: "/login", label: "Administrator Sign In" },
             { to: "/contact", label: "Contact Us" },
           ].map((link, index) => (

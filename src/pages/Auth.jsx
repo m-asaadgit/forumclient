@@ -3,6 +3,7 @@ import {  MdVisibility, MdVisibilityOff } from "react-icons/md";
 import {  useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../components/Loader";
+import { toast } from "react-toastify";
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 
@@ -43,7 +44,7 @@ function Auth() {
     } catch (error) {
       setLoader(false);
 
-      console.error(
+      toast.error(
         "Login failed:",
         error.response ? error.response.data.message : error.message
       );
