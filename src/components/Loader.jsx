@@ -1,8 +1,7 @@
-import React from 'react'
 
 function Loader() {
   return (
-    <div className="loader bg-transparent  h-[100vh]"></div>
+    <div className="loader bg-transparent  absolute top-[40%] z-[2004]"></div>
 
   )
 }

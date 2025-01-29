@@ -81,9 +81,9 @@ function Slider({ data, setDot }) {
       setDot(dots); // Update the parent state only after rendering
     }
   }, [dots, setDot]); // Run this effect whenever 'dots' or 'setDot' changes
-  
+
   const slides = useMemo(() => {
-    return data && data.length > 0 ? (
+    return data && data.length > 0 && (
       data.map((item, index) => (
         <div
           key={index}
@@ -100,15 +100,18 @@ function Slider({ data, setDot }) {
             </h1>
             <h1 className="bg-b/50 md:flex hidden text-justify text-sm text-gray-400">
               {item.description.slice(0, 430)}...
-            </h1><h1 className="bg-b/50 md:hidden flex text-justify text-sm text-gray-400">
+            </h1>
+            <h1 className="bg-b/50 md:hidden flex text-justify text-sm text-gray-400">
               {item.description.slice(0, 130)}...
             </h1>
           </div>
         </div>
       ))
-    ) : (
-      <h1 className="w-fit mx-auto h-fit my-auto text-white">No slide Image</h1>
-    );
+    ) 
+    
+    // : (
+    //   <h1 className="w-fit mx-auto h-fit my-auto text-white">No slide Image</h1>
+    // );
   }, [data, dots]);
 
   return (
@@ -124,7 +127,7 @@ function Slider({ data, setDot }) {
       >
         {slides}
       </div>
-      {(currentIndex != 0 )  && (
+      {currentIndex != 0? (
         <button
           onClick={goToPrevious}
           className="absolute flex  top-1/2 left-2 transform -translate-y-1/2 bg-gray-800 p-3 rounded-full text-white hover:bg-gray-700"
@@ -132,17 +135,27 @@ function Slider({ data, setDot }) {
           <FaChevronLeft size={20} className=" hidden tb:flex" />
           <FaChevronLeft size={10} className="flex tb:hidden" />
         </button>
-      )}{" "}
-      {(currentIndex >= 0 && currentIndex != data.length - 1 ) && (
-      <button
-      onClick={goToNext}
-      className="absolute flex top-1/2 right-2 transform -translate-y-1/2 bg-gray-800 p-3 rounded-full text-white hover:bg-gray-700"
+      ): <button
+      disabled
+      className="absolute flex hover:cursor-not-allowed top-1/2 left-2 transform -translate-y-1/2 bg-gray-800 p-3 rounded-full text-white/20 active:cursor-not-allowed"
+    >
+      <FaChevronLeft size={20} className=" hidden tb:flex" />
+      <FaChevronLeft size={10} className="flex tb:hidden" />
+    </button>}
+      {currentIndex >= 0 && currentIndex != data.length - 1 ? (
+        <button
+          onClick={goToNext}
+          className="absolute flex top-1/2 right-2 transform -translate-y-1/2 bg-gray-800 p-3 rounded-full text-white hover:bg-gray-700"
+        >
+          <FaChevronRight size={20} className="hidden tb:flex" />
+          <FaChevronRight size={10} className="flex tb:hidden" />
+        </button>
+      ):<button
+      className="absolute hover:cursor-not-allowed active:cursor-not-allowed flex top-1/2 right-2 transform -translate-y-1/2 bg-gray-800 p-3 rounded-full text-white/20 hover:bg-gray-700"
     >
       <FaChevronRight size={20} className="hidden tb:flex" />
       <FaChevronRight size={10} className="flex tb:hidden" />
-    </button>
-      )}
-     
+    </button>}
     </div>
   );
 }

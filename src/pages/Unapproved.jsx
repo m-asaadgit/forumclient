@@ -24,30 +24,29 @@
 
 //   const { data,loading,error } = useSelector((state) => state.approvableData);
 //     const [filteredData,setFilteredData]=useState();
-  
+
 //   const navigate = useNavigate();
 //   // eslint-disable-next-line no-unused-vars
 //   const [selectedItem, setSelectedItem] = useState(null);
 //   const [seeDelete, setSeeDelete] = useState(null);
 //   const [seeApprove, setSeeApprove] = useState(null);
 
-
 //   const token = localStorage.getItem("token");
 //   const approveForm = (formId) => {
 //     dispatch(approveFormFromRedux({ formId, token }));
 
 //   };
-  
+
 //   const disapproveForm = (formId) => {
 //     dispatch(disapproveFormFromRedux({ formId, token }));
 
 //   };
-  
+
 //   useEffect(() => {
 //     dispatch(fetchApprovableData());
-    
+
 //   }, [dispatch]);
-  
+
 //   useEffect(() => {
 //     if (data) {
 //       const filtered = data.filter((item) =>
@@ -56,16 +55,12 @@
 //       setFilteredData(filtered);
 //     }
 //   }, [isChecked, data]);
-  
-  
 
 // if(loading) return <Loader></Loader>
- 
+
 //   return (
 //     <div className="bg-white w-[100%] md:pt-[34vh]  pb-[15vh] md:pb-[15vh] pt-[25vh] relative   px-[2%] min-h-[110vh] h-fit flex flex-wrap gap-[1%] justify-center py-4">
 
-         
-      
 //       <Link
 //         onClick={() => navigate(-1)}
 //         className="bg-gray-900 hidden fixed z-50 top-[24vh] left-10  md:flex items-center justify-center rounded-sm md:text-2xl font-normal gap-2 py-1 hover:bg-black hover:scale-[101%] shadow-md shadow-gray-600 text-white w-fit px-2 pr-4 h-fit"
@@ -138,18 +133,6 @@
 //         </div>
 //       )}
 
-
-
-
-
-
-
-
-
-
-
-   
-
 //       {filteredData?.length > 0 ? (
 //         filteredData?.map((item) => (
 //           <div
@@ -167,7 +150,7 @@
 //                 }
 //               </div>
 //               <Link
-//                 className="bg-yellow-400 shadow-2xl shadow-slate-900 text-black px-2 font-semibold h-fit flex gap-1 items-center py-[3px] hover:scale-110 transition-all duration-200 w-fit mt-2 rounded-sm" 
+//                 className="bg-yellow-400 shadow-2xl shadow-slate-900 text-black px-2 font-semibold h-fit flex gap-1 items-center py-[3px] hover:scale-110 transition-all duration-200 w-fit mt-2 rounded-sm"
 //                 // to={"/details"}
 //                 // onClick={() => {
 //                 //   setSelectedItem(null);
@@ -251,9 +234,7 @@ function Unapproved() {
   const dispatch = useDispatch();
   const [isChecked, setIsChecked] = useState(true); // State to hold the checkbox status
   const [filteredData, setFilteredData] = useState([]);
-  const { data, loading, error } = useSelector(
-    (state) => state.approvableData
-  );
+  const { data, loading, error } = useSelector((state) => state.approvableData);
   const navigate = useNavigate();
   const [seeDelete, setSeeDelete] = useState(null);
   const [seeApprove, setSeeApprove] = useState(null);
@@ -274,11 +255,20 @@ function Unapproved() {
   useEffect(() => {
     dispatch(fetchApprovableData());
   }, [dispatch]);
+  useEffect(() => {
+    if(data.length==0){
+      return
+    }
+    if(data.length > 0) {
+      return
+    }
+    dispatch(fetchApprovableData());
+  }, );
 
   useEffect(() => {
     if (data) {
-      const filtered = data.filter(
-        (item) => (isChecked ? item.gender === "male" : item.gender === "female")
+      const filtered = data.filter((item) =>
+        isChecked ? item.gender === "male" : item.gender === "female"
       );
       setFilteredData(filtered);
     }
@@ -413,13 +403,15 @@ function Unapproved() {
                 <Link
                   onClick={() => setSeeApprove(item._id)}
                   className="w-[48%] text-white text-xl md:text-sm flex items-center px-2  gap-2 bg-green-500 py-[5px] text-center font-semibold rounded-sm hover:scale-[101%] transition-all"
-                >Approve
+                >
+                  Approve
                   <MdPersonAddAlt1 size={28} />
                 </Link>
                 <Link
                   onClick={() => setSeeDelete(item._id)}
                   className="w-[48%] text-white  md:text-sm flex items-center px-2  text-xl md:text-lg px-2 flex gap-2 bg-red-500 py-[5px] text-center font-semibold rounded-sm hover:scale-[101%] transition-all"
-                >Delete
+                >
+                  Delete
                   <MdPersonRemove size={20} />
                 </Link>
               </div>

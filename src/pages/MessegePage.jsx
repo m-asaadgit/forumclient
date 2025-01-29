@@ -10,7 +10,7 @@ import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFeedback } from "../redux/Slice/feedbackSlice";
-
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
 function MessegePage() {
   const { data, loading, error } = useSelector((state) => state.feedback);
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ function MessegePage() {
   const deleteMessege = async (id) => {
     try {
       await axios.delete(
-        `https://forumserver-f93h.onrender.com/api/auth/DeleteFeedback/${id}`,
+        `${apiUrl}/api/auth/DeleteFeedback/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

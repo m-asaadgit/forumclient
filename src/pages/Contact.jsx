@@ -28,6 +28,9 @@ function Contact() {
           feedback,
         }
       );
+      setName("")
+      setContact("")
+      setFeedback("")
       setLoader(false);
       setMessage(response.data.message);
 

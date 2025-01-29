@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -5,9 +6,14 @@ import { RxCross2 } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteSliderIMG, fetchSliderIMG } from "../redux/Slice/SliderIMGSlice";
+import {
+  deleteSliderImageAsync,
+  fetchSliderImagesAsync,
+} from "../redux/Slice/SliderIMGSlice";
 import Loader from "../components/Loader";
+
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
 
 
 const LandingPage = () => {
@@ -17,30 +23,28 @@ const LandingPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [showDelete, setShowDelete] = useState(false);
   const [showForm, setShowForm] = useState(false);
-
   const [toDeleteData, setToDeleteData] = useState(null);
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const fileInputRef = useRef(null);
 
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    dispatch(fetchSliderImagesAsync()).catch((err) => console.error(err));
+  }, [dispatch]);
+
   const handleImageChange = (e) => {
-    
     const file = e.target.files[0];
     setImage(file);
-
     if (file) {
       const previewUrl = URL.createObjectURL(file);
       setPreviewImage(previewUrl);
     }
   };
 
-  const token = localStorage.getItem("token");
-
   const handleSubmit = async (e) => {
-    
     e.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
@@ -49,22 +53,17 @@ const LandingPage = () => {
 
     try {
       setUploading(true);
-      const response = await axios.post(
-        `${apiUrl}/api/auth/setSliderImages`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post(`${apiUrl}/api/auth/setSliderImages`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      dispatch(fetchSliderIMG());
-      setShowForm(false)
+      dispatch(fetchSliderImagesAsync());
+      setShowForm(false);
       toast.success(response.data.message);
 
-       
       setTitle("");
       setDescription("");
       setImage(null);
@@ -76,58 +75,47 @@ const LandingPage = () => {
     }
   };
 
-  const deleteIMG = async (formId) => {
-    
-      dispatch(deleteSliderIMG({formId,token}));
+  const deleteIMG = (formId) => {
+    dispatch(deleteSliderImageAsync( formId, token )).catch(() =>
+      toast.error("Error while deleting image")
+    );
   };
-  useEffect(() => {
-    dispatch(fetchSliderIMG()).catch((err) => console.error(err));
-  }, [dispatch]);
-  useEffect(() => data && console.log(data), [data]);
-  
-  if (loading) return <Loader></Loader>;
+
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error.message || "Failed to load data"}</p>;
 
   return (
-    <div className="w-[100%] md:pt-[25vh] pt-[15vh] md:pb-[10vh]  md:h-fit  tb:h-[95vh] h-fit relative  pb-20  bg-white">
-      <div className="w-full flex flex-col md:flex-row gap-4 md:gap-0  ">
+    <div className="w-[100%] md:pt-[25vh] pt-[15vh] md:pb-[10vh] md:h-fit tb:h-[95vh] h-fit relative pb-20 bg-white">
+      <div className="w-full flex flex-col md:flex-row gap-4 md:gap-0">
         <Link
           onClick={() => navigate(-1)}
-          className="bg-gray-900 ml-10   flex items-center justify-center rounded-sm md:text-2xl font-normal gap-2 py-1 hover:bg-black hover:scale-[101%] shadow-md shadow-gray-600 text-white w-fit px-2 pr-4 h-fit"
+          className="bg-gray-900 ml-10 flex items-center justify-center rounded-sm md:text-2xl font-normal gap-2 py-1 hover:bg-black hover:scale-[101%] shadow-md shadow-gray-600 text-white w-fit px-2 pr-4 h-fit"
         >
           <MdArrowBack />
           back
         </Link>
         <button
           onClick={() => setShowForm(true)}
-          className="md:mx-[30vw] md:w-fit w-[90%] mx-auto  bg-[#e5e5e5] shadow-md shadow-[#f2e9e4] px-4 py-2 font-semibold rounded-sm "
+          className="md:mx-[30vw] md:w-fit w-[90%] mx-auto bg-[#e5e5e5] shadow-md shadow-[#f2e9e4] px-4 py-2 font-semibold rounded-sm"
         >
-          {" "}
-          Click to add new Slider Images{" "}
+          Click to add new Slider Images
         </button>
       </div>
+
       {showForm && (
-        <div className="absolute shadow-sm  shadow-[#e0e1dd] z-40 bg-[#dadae2] top-[35vh] md:left-[35vw] left-[10vw] mx-auto md:mx-0  md:w-[30vw] w-[80vw]  ">
-          {" "}
-          <form
-            className=" py-4 w-full h-full px-2 flex flex-col gap-4"
-            onSubmit={handleSubmit}
-          >
-            <div
-              onClick={() => setShowForm((prev) => !prev)}
-              className="absolute right-2 top-2"
-            >
-              <RxCross2 size={20}></RxCross2>{" "}
+        <div className="absolute shadow-sm shadow-[#e0e1dd] z-40 bg-[#dadae2] top-[35vh] md:left-[35vw] left-[10vw] mx-auto md:mx-0 md:w-[30vw] w-[80vw]">
+          <form className="py-4 w-full h-full px-2 flex flex-col gap-4" onSubmit={handleSubmit}>
+            <div onClick={() => setShowForm((prev) => !prev)} className="absolute right-2 top-2">
+              <RxCross2 size={20} />
             </div>
             <div>
               <input
                 type="text"
                 placeholder="name"
-                className="bg-slate-100 px-2 w-[80%] mx-4 focus:outline-none "
+                className="bg-slate-100 px-2 w-[80%] mx-4 focus:outline-none"
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                // required
               />
             </div>
             <div>
@@ -135,23 +123,22 @@ const LandingPage = () => {
                 type="text"
                 id="description"
                 placeholder="description"
-                className="bg-slate-100 px-2  w-[80%] mx-4 focus:outline-none"
+                className="bg-slate-100 px-2 w-[80%] mx-4 focus:outline-none"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                // required
               />
             </div>
-            <div className="flex  px-2   mx-4 w-full">
+            <div className="flex px-2 mx-4 w-full">
               <input
-                ref={fileInputRef} // Use the ref here
-                className=" w-[60%]"
+                ref={fileInputRef}
+                className="w-[60%]"
                 type="file"
                 placeholder="image"
                 id="image"
-                onChange={handleImageChange} // Removed `value`
+                onChange={handleImageChange}
                 required
               />
-              {previewImage && ( // Conditionally render preview image
+               {previewImage && ( // Conditionally render preview image
                 <div className="w-[80px] relative flex gap-2">
                   <img
                     src={previewImage}
@@ -171,51 +158,37 @@ const LandingPage = () => {
                 </div>
               )}
             </div>
-
-            <button
-              type="submit"
-              className="bg-yellow-500 w-fit mx-auto rounded-sm font-semibold px-2 "
-              disabled={uploading}
-            >
+            <button type="submit" className="bg-yellow-500 w-fit mx-auto rounded-sm font-semibold px-2" disabled={uploading}>
               {uploading ? "Uploading..." : "Submit"}
             </button>
           </form>
         </div>
       )}
-      <div className="bg-[#e0e3e7] flex  gap-10 py-8 justify-center mx-auto flex-wrap  my-5 w-[95%] h-fit ">
-        {data && data.length > 0 ? (
+
+      <div className="bg-[#e0e3e7] flex gap-10 py-8 justify-center mx-auto flex-wrap my-5 w-[95%] h-fit">
+        {data?.length > 0 ? (
           data.map((item, index) => (
-            <div
-              key={index}
-              className="md:min-w-[28%] md:max-w-[28%] tb:w-[70%] relative w-[90%] bg-zinc-100/80 h-[200px]"
-            >
+            <div key={index} className="md:min-w-[28%] md:max-w-[28%] tb:w-[70%] relative w-[90%] bg-zinc-100/80 h-[200px]">
               <button
                 onClick={() => {
-                  setShowDelete((prev) => !prev);
                   setToDeleteData(item);
                 }}
-                className="bg-[#d90429] font-semibold absolute top-2 right-4 px-2 py-1  rounded"
+                className="bg-[#d90429] font-semibold absolute top-2 right-4 px-2 py-1 rounded"
               >
                 delete
               </button>
-
-              {item?.imgUrl && (
-                <img src={item.imgUrl} className="w-full h-full" />
-              )}
+              {item?.imgUrl && <img src={item.imgUrl} className="w-full h-full" />}
             </div>
           ))
         ) : (
           <h1 className="font-semibold">
             No slider data added{" "}
-            <Link
-              onClick={() => setShowForm(true)}
-              className="text-blue-700 font-normal"
-            >
+            <Link onClick={() => setShowForm(true)} className="text-blue-700 font-normal">
               Click here to add new data
-            </Link>{" "}
+            </Link>
           </h1>
         )}
-        {toDeleteData && (
+       {toDeleteData && (
           <div className=" fixed px-20 py-10 flex flex-col items-center justify-center z-30 top-[30vh] md:left-[35vw] left-5vw md:bg-[#edf2f4]/90 bg-slate-300 w-[90%] md:w-fit mx-auto rounded-sm shadow-sm gap-4 shadow-[#e0e1dd]">
             <div className="flex gap-4">
               {" "}

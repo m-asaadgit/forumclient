@@ -4,15 +4,16 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdPerson } from "react-icons/md";
 import { MdPerson2 } from "react-icons/md";
+import { RxCross1 } from "react-icons/rx";
 
 import Loader from "../components/Loader";
 import { MdArrowBack } from "react-icons/md";
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
-
 function DetailFiller() {
-
   // const navigate = useNavigate();
+  const [otpFiller, setOtpFiller] = useState(Array(6).fill("")); // Initialize OTP with 6 empty fields
+  const [gotOtp, setGotOtp] = useState(false);
   const [laoding, setloading] = useState(false);
   const [isChecked, setIsChecked] = useState(true); // State to hold the checkbox status
 
@@ -32,29 +33,30 @@ function DetailFiller() {
     contact: "",
     permanent: "",
     temporary: "",
+    otp: "",
 
     hadTenth: false,
     tenthInstitute: "",
     tenthYear: "",
-    tenthImg: "",
+    // tenthImg: "",
     tenthPercent: "",
 
     hadTwelfth: false,
     twelfthInstitute: "",
     twelfthYear: "",
-    twelfthImg: "",
+    // twelfthImg: "",
     twelfthPercent: "",
 
     hadBachelor: false,
     bachelorInstitute: "",
     bachelorYear: "",
-    bachelorImg: "",
+    // bachelorImg: "",
     bachelorPercent: "",
 
     hadMaster: false,
     masterInstitute: "",
     masterYear: "",
-    masterImg: "",
+    // masterImg: "",
     masterPercent: "",
 
     employed: false,
@@ -67,6 +69,7 @@ function DetailFiller() {
   });
 
   const handleReset = () => {
+    setOtpFiller(Array(6).fill(""))
     setFormData({
       name: "",
       father: "",
@@ -77,36 +80,26 @@ function DetailFiller() {
       permanent: "",
       temporary: "",
       gender: "",
-
       hadTenth: false,
       tenthInstitute: "",
       tenthYear: "",
-      tenthImg: "",
       tenthPercent: "",
-
+      otp:"",
       hadTwelfth: false,
       twelfthInstitute: "",
       twelfthYear: "",
-      twelfthImg: "",
       twelfthPercent: "",
-
       hadBachelor: false,
       bachelorInstitute: "",
       bachelorYear: "",
-      bachelorImg: "",
       bachelorPercent: "",
-
       hadMaster: false,
       masterInstitute: "",
       masterYear: "",
-      masterImg: "",
       masterPercent: "",
-
       employed: false,
-
       workingAs: "",
       dropReason: "",
-
       workingAt: "",
       img: "",
     });
@@ -125,52 +118,121 @@ function DetailFiller() {
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  formData.gender = genderSetter;
+  const handleEmailSubmit = async (e) => {
+    e.preventDefault();
 
-  // Check the file format before submission
-  const allowedFormats = ["image/jpeg", "image/png", "image/jpg"]; // Add other formats if needed
-  const file = formData.img; // Assuming formData.img is the file object
-  
-  if (file && !allowedFormats.includes(file.type)) {
-    toast.error("Incorrect file format. Please upload a valid image file (JPG, JPEG, PNG).");
-    return; // Prevent form submission
-  }
+    setloading(true);
+    toast.info(`Sending OTP to ${formData.email}`);
 
-  setloading(true); // Set loading to true as soon as form submission starts
+    try {
+      const response = await axios.post(
+        `${apiUrl}/api/auth/verify-mail`,
+        {
+          email: formData.email,
+        }
+      );
+      setGotOtp(true);
 
-  const formDataToSubmit = new FormData();
-  Object.keys(formData).forEach((key) => {
-    if (formData[key]) {
-      formDataToSubmit.append(key, formData[key]);
-    }
-  });
-
-  try {
-    const response = await axios.post(
-      `${apiUrl}/api/auth/createDetail`,
-      formDataToSubmit,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
+      // Provide more user-friendly feedback
+      if (response.data.success) {
+        toast.success(response.data.message); // Assuming message is returned in success case
+      } else {
+        toast.error(response.data.message);
       }
-    );
 
-    toast.success("Form successfully sent to get approved");
-
-    if (response.data.success) {
-      setloading(false); // Set loading to false on success
+      setloading(false);
+    } catch (err) {
+      // Corrected the typo 'messege' to 'message'
+      toast.error(err.response?.data.message || "An error occurred");
+      setloading(false);
+      return;
     }
-  } catch (error) {
-    setloading(false); // Set loading to false on error
+  };
+  
+  const handleOTPChange = (e, index) => {
+    if( e.nativeEvent.data==null || formData.otp.length <6 ){
+    
+      const value = e.target.value;
+      if (/[^0-9]/.test(value)) return; // Allow only numbers
+  
+  
+      
+      // Update otpFiller array
+      const newOtp = [...otpFiller];
+      newOtp[index] = value;
+      setOtpFiller(newOtp);
+  
+      // Update formData.otp as a string
+      let otpValue = "";
+      otpValue= newOtp.join(""); // Combine array values into a single string
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        otp: otpValue, // Assign the joined OTP string to formData.otp
+      }));
+  
+      // Automatically focus on the next field if the current one is filled
+      if (value && index < 5) {
+        document.getElementById(`otp-field-${index + 1}`).focus();
+      }
+        }
 
-    toast.error(
-      error.response?.data.message || "Error submitting form, please try again."
-    );
 
-  }
-};
+  };
 
+  const handleOTPKeyDown = (e, index) => {
+    // Allow backspace to move focus to the previous field
+    if (e.key === "Backspace" && !otpFiller[index] && index > 0) {
+      document.getElementById(`otp-field-${index - 1}`).focus();
+    }
+  };
+ 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    formData.gender = genderSetter;
+  
+    // Check file format
+    const allowedFormats = ["image/jpeg", "image/png", "image/jpg"];
+    const file = formData.img;
+  
+    if (file && !allowedFormats.includes(file.type)) {
+      toast.error(
+        "Incorrect file format. Please upload a valid image file (JPG, JPEG, PNG)."
+      );
+      return;
+    }
+  
+    setloading(true); // Start loading
+    const data = new FormData();
+  
+    // Append key-value pairs, skipping empty fields
+    for (const key in formData) {
+      if (formData[key]) {
+        data.append(key, formData[key]);
+        
+      }
+    }
+
+
+    try {
+      // Make API request
+      const response = await axios.post(`${apiUrl}/api/auth/createDetail`, data,  {    headers: {       "Content-Type": "multipart/form-data",
+      }}
+      );
+  setGotOtp(false)
+      toast.success("Form successfully sent to get approved");
+      handleReset()
+      if (response.data.success) {
+        setloading(false); // Stop loading
+      }
+    } catch (error) {
+      setloading(false);
+      toast.error(
+        error.response?.data.message || "Error submitting form, please try again."
+      );
+    }
+  };
+  
+ 
   useEffect(() => {
     isChecked ? setGenderSetter("male") : setGenderSetter("female");
     handleReset();
@@ -178,6 +240,55 @@ const handleSubmit = async (e) => {
 
   return (
     <div className="flex w-full relative md:py-[15vh] tb:pt-[18vh] pb-[0vh] pt-[20vh]  md:z-[2000] items-center justify-center min-h-screen bg-slate-100">
+      {gotOtp && (
+        <div className="fixed top-0  bg-black/40 left-0 w-full h-full flex items-center justify-center z-[2001]">
+          <div className=" relative flex flex-col items-center md:pt-10 md:pb-5  bg-b w-[40%] h-fit  rounded-xl md:z-[2001] ">
+            <RxCross1
+              onClick={() => setGotOtp(false)}
+              className="text-zinc-200 absolute top-2 right-2 text-2xl  "
+            ></RxCross1>
+
+            <h1 className="text-zinc-300 font-ub text-2xl mb-4 capitalize">
+              Enter your OTP
+            </h1>
+            <div className="flex w-[80%]  justify-center space-x-2">
+              {otpFiller.map((digit, index) => (
+                <input
+                  key={index}
+                  id={`otp-field-${index}`}
+                  type="number"
+                  value={digit}
+                  onChange={(e) => handleOTPChange(e, index)}
+                  onKeyDown={(e) => handleOTPKeyDown(e, index)}
+                  // placeholder="0"
+                  maxLength="1"
+                  className="w-12 h-12 text-center bg-transparent  border-b-2 text-zinc-400 border-black/90 shadow-md shadow-black text-2xl  rounded-sm focus:outline-none focus:none outline-none transition"
+                />
+              ))}
+            </div>
+            <div
+              className=" py-4 w-[70%] flex  justify-between px-10"
+            >
+              <button
+              onClick={(e) => handleSubmit(e)}
+              
+              className="bg-green-600 px-2 py-1 rounded-sm font-semibold capitalize  ">
+                submit OTP
+              </button>
+              <button
+                onClick={(e) => handleEmailSubmit(e)}
+                className="bg-blue-600 px-2 py-1 rounded-sm font-semibold capitalize  "
+              >
+                Resend OTP
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+
+
       <Link
         to={"/"}
         className="bg-gray-900 fixed top-5 left-10 z-50  md:flex hidden items-center justify-center rounded-sm md:text-2xl font-normal gap-2 py-1 hover:bg-black hover:scale-[101%] shadow-md shadow-gray-600 text-white w-fit px-2 pr-4 h-fit"
@@ -185,6 +296,10 @@ const handleSubmit = async (e) => {
         <MdArrowBack />
         back
       </Link>
+
+
+
+
       <div className="absolute  bg-gray-200 px-4 py-2 rounded-md shadow-lg z-[500] shadow-zinc-400 flex items-center gap-3 md:top-5 top-[12vh] md:left-[15vw] left-[5vw]">
         <label className="relative inline-flex items-center cursor-pointer">
           <input
@@ -198,10 +313,12 @@ const handleSubmit = async (e) => {
         </label>
         <span className="font-bold"> {!isChecked ? "Female" : "Male"}</span>
       </div>
+
+
       {isChecked ? (
         <form
           className="bg-white  md:p-10 relative rounded-lg shadow-xl w-[95%] mx-auto md:max-w-[70%] space-y-2 md:space-y-6"
-          onSubmit={handleSubmit}
+          onSubmit={handleEmailSubmit}
         >
           <h2 className=" tracking-wide  flex  justify-center md-pl-0 items-center  gap-1 text-gray-900 md:pr-10  md:text-4xl text-2xl font-bold ctext-lg capitalize md:font-extrabold md:mb-6 mb-1 pt-4 md:pt-0 text-center">
             Fill your profile <MdPerson className="mt-1"></MdPerson>
@@ -284,7 +401,7 @@ const handleSubmit = async (e) => {
             </div>
             <div className="  md:w-[40%] w-[50%] flex flex-col ">
               <input
-                type="text"
+                type="email"
                 id="email"
                 name="email"
                 placeholder="Your email"
@@ -399,17 +516,18 @@ const handleSubmit = async (e) => {
                   </div>
                 )}
               </div>
-            </div>{" "}  <div className="md:w-[49%] tb:w-[47%]  md:mb-6 w-full flex  h-fit flex-col  md:px-0  md:gap-4 gap-2 md:justify-center ">
+            </div>{" "}
+            <div className="md:w-[49%] tb:w-[47%]  md:mb-6 w-full flex  h-fit flex-col  md:px-0  md:gap-4 gap-2 md:justify-center ">
               <div className="  flex md:gap-4 gap-2 items-center">
                 <label className="md:block md:px-0 px-4 text-gray-900 font-bold md:text-lg text-sm md:mb-0 ">
                   12th
                 </label>
                 <input
-                     type="checkbox"
-                     name="hadTwelfth"
-                     checked={formData.hadTwelfth}
-                     onChange={handleChange}
-                     className="w-4 h-4 text-black"
+                  type="checkbox"
+                  name="hadTwelfth"
+                  checked={formData.hadTwelfth}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-black"
                 />
                 <label
                   htmlFor="hadTwelfth"
@@ -420,14 +538,14 @@ const handleSubmit = async (e) => {
                 </label>
               </div>
               <div className=" h-fit">
-              {formData.hadTwelfth && (
+                {formData.hadTwelfth && (
                   <div className="">
                     <div className="w-full flex flex-row md:my-2 gap-[3%]   md:h-[7vh] ">
                       <input
-                              type="text"
-                              id="twelfthInstitute"
-                              name="twelfthInstitute"
-                              value={formData.twelfthInstitute}
+                        type="text"
+                        id="twelfthInstitute"
+                        name="twelfthInstitute"
+                        value={formData.twelfthInstitute}
                         placeholder="Institute Name"
                         onChange={handleChange}
                         className="w-[100%] p-2  rounded bg-slate-300 shadow-lg shadow-gray-200 text-black font-semibold focus:outline-none"
@@ -442,11 +560,11 @@ const handleSubmit = async (e) => {
               Year of passing
             </label> */}
                       <input
-                      type="text"
-                      id="twelfthYear"
-                      name="twelfthYear"
-                      value={formData.twelfthYear}
-                      onChange={handleChange}
+                        type="text"
+                        id="twelfthYear"
+                        name="twelfthYear"
+                        value={formData.twelfthYear}
+                        onChange={handleChange}
                         placeholder="Year of passing"
                         className="md:w-[40%] w-[60%] mr-2  p-2 rounded bg-slate-300 shadow-lg shadow-gray-200 text-black font-semibold focus:outline-none"
                         required={formData.hadTwelfth}
@@ -472,7 +590,6 @@ const handleSubmit = async (e) => {
                 )}
               </div>
             </div>{" "}
-          
             <div className="md:w-[49%] tb:w-[47%] md:mb-6  w-full flex   h-fit flex-col     md:gap-4 gap-2 md:justify-center ">
               <div className=" flex gap-2 items-center">
                 <label className="md:block md:px-0 px-4 md:w-[150px] w-fit   text-gray-900 font-bold  text-sm md:text-md md:mb-0 ">
@@ -733,10 +850,10 @@ const handleSubmit = async (e) => {
       ) : (
         <form
           className="bg-white  md:p-10 relative rounded-lg shadow-xl w-[95%] mx-auto md:max-w-[70%] space-y-2 md:space-y-6"
-          onSubmit={handleSubmit}
+          onSubmit={handleEmailSubmit}
         >
           <h2 className=" tracking-wide  flex  justify-center md-pl-0 items-center  gap-1 text-gray-900 md:pr-10  md:text-4xl text-2xl font-bold ctext-lg capitalize md:font-extrabold md:mb-6 mb-1 pt-4 md:pt-0 text-center">
-Fill your profile <MdPerson2 className="mt-1"></MdPerson2> 
+            Fill your profile <MdPerson2 className="mt-1"></MdPerson2>
           </h2>
           {/* Basic Information Section */}
           <div className="flex  md:px-0  px-4 min-w-[100%] flex-wrap  gap-[1%]">
@@ -776,7 +893,7 @@ Fill your profile <MdPerson2 className="mt-1"></MdPerson2>
                 required
               />
             </div>
-             <div className="   w-[50%] flex flex-col ">
+            <div className="   w-[50%] flex flex-col ">
               <input
                 type="text"
                 id="email"
@@ -801,9 +918,6 @@ Fill your profile <MdPerson2 className="mt-1"></MdPerson2>
               />
             </div>
           </div>
-           
-        
-          
           {/* Contact Information
 
   {/* Address Information */}
@@ -908,17 +1022,18 @@ Fill your profile <MdPerson2 className="mt-1"></MdPerson2>
                   </div>
                 )}
               </div>
-            </div>{" "}  <div className="md:w-[49%] tb:w-[47%]  md:mb-6 w-full flex  h-fit flex-col  md:px-0  md:gap-4 gap-2 md:justify-center ">
+            </div>{" "}
+            <div className="md:w-[49%] tb:w-[47%]  md:mb-6 w-full flex  h-fit flex-col  md:px-0  md:gap-4 gap-2 md:justify-center ">
               <div className="  flex md:gap-4 gap-2 items-center">
                 <label className="md:block md:px-0 px-4 text-gray-900 font-bold md:text-lg text-sm md:mb-0 ">
                   12th
                 </label>
                 <input
-                     type="checkbox"
-                     name="hadTwelfth"
-                     checked={formData.hadTwelfth}
-                     onChange={handleChange}
-                     className="w-4 h-4 text-black"
+                  type="checkbox"
+                  name="hadTwelfth"
+                  checked={formData.hadTwelfth}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-black"
                 />
                 <label
                   htmlFor="hadTwelfth"
@@ -929,14 +1044,14 @@ Fill your profile <MdPerson2 className="mt-1"></MdPerson2>
                 </label>
               </div>
               <div className=" h-fit">
-              {formData.hadTwelfth && (
+                {formData.hadTwelfth && (
                   <div className="">
                     <div className="w-full flex flex-row md:my-2 gap-[3%]   md:h-[7vh] ">
                       <input
-                              type="text"
-                              id="twelfthInstitute"
-                              name="twelfthInstitute"
-                              value={formData.twelfthInstitute}
+                        type="text"
+                        id="twelfthInstitute"
+                        name="twelfthInstitute"
+                        value={formData.twelfthInstitute}
                         placeholder="Institute Name"
                         onChange={handleChange}
                         className="w-[100%] p-2  rounded bg-slate-300 shadow-lg shadow-gray-200 text-black font-semibold focus:outline-none"
@@ -951,11 +1066,11 @@ Fill your profile <MdPerson2 className="mt-1"></MdPerson2>
               Year of passing
             </label> */}
                       <input
-                      type="text"
-                      id="twelfthYear"
-                      name="twelfthYear"
-                      value={formData.twelfthYear}
-                      onChange={handleChange}
+                        type="text"
+                        id="twelfthYear"
+                        name="twelfthYear"
+                        value={formData.twelfthYear}
+                        onChange={handleChange}
                         placeholder="Year of passing"
                         className="md:w-[40%] w-[60%] mr-2  p-2 rounded bg-slate-300 shadow-lg shadow-gray-200 text-black font-semibold focus:outline-none"
                         required={formData.hadTwelfth}
@@ -981,7 +1096,6 @@ Fill your profile <MdPerson2 className="mt-1"></MdPerson2>
                 )}
               </div>
             </div>{" "}
-          
             <div className="md:w-[49%] tb:w-[47%] md:mb-6  w-full flex   h-fit flex-col     md:gap-4 gap-2 md:justify-center ">
               <div className=" flex gap-2 items-center">
                 <label className="md:block md:px-0 px-4 md:w-[150px] w-fit   text-gray-900 font-bold  text-sm md:text-md md:mb-0 ">
@@ -1234,12 +1348,13 @@ Fill your profile <MdPerson2 className="mt-1"></MdPerson2>
               Reset
             </button>
           </div>
-          {laoding && (
+         
+        </form>
+      )}
+       {laoding && (
             /* From Uiverse.io by SchawnnahJ */
             <Loader></Loader>
           )}
-        </form>
-      )}
     </div>
   );
 }

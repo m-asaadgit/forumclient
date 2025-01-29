@@ -12,6 +12,7 @@ function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [Loading, setLoader] = useState(false);
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ function Auth() {
         "Login failed:",
         error.response ? error.response.data.message : error.message
       );
-      setMessage(
+      setError( 
         error.response ? error.response.data.message : "An error occurred"
       );
     }
@@ -58,12 +59,19 @@ function Auth() {
   return (
     <div className="flex md:pt-[5vh] flex-col  fixed w-[100%]  gap-4 items-center justify-center h-[80vh] ">
       <div className="md:w-[40%] w-[90%] md:h-[7vh] h-[7vh] tb-h-[5vh] ">
-      
+    
       </div>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-2.5 bg-white shadow-xl shadow-gray-300 md:p-7 md:w-[40%] p-2 w-[90%] rounded-sm font-sans"
       >
+        {
+
+<p className="text-red-500">
+{error&& error}
+
+</p>  
+}
       <div className="flex flex-col">
        
        <div className=" border-b-[2px] h-12 flex bg-white items-center transition-all ">
@@ -112,7 +120,7 @@ function Auth() {
         >
           Submit
         </button>
-        <h1>{message}</h1>
+        <h1 className="text-green-500">{message && message }</h1>
       </form>
       
 

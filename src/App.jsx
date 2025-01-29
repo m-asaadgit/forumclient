@@ -1,6 +1,5 @@
-
 import Routers from "./Routers";
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../src/components/Navbar";
 import ScrollToTop from "./utlis/ScrollToTop";
 import Footer from "./components/Footer";
@@ -8,7 +7,8 @@ import logo from "../src/assets/logo.png";
 import gsap from "gsap";
 // import { gsap } from "gsap";
 function App() {
-  const [lander, setLander] = useState(true);
+
+  const [lander, setLander] = useState(false);
 
   useEffect(() => {
     const tl = gsap.timeline({
@@ -35,7 +35,7 @@ function App() {
       ease: "power2.out", // Smooth easing
     });
   }, []);
- 
+
   if (lander)
     return (
       <div className="h-[100vh] w-full bg-slate-200">
@@ -45,7 +45,6 @@ function App() {
             src={logo}
             alt="Rotating"
           />
-        
         </div>
       </div>
     );
