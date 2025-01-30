@@ -13,7 +13,7 @@ const apiUrl = import.meta.env.VITE_API_BASE_URL;
 function DetailFiller() {
   // const navigate = useNavigate();
   const [otpFiller, setOtpFiller] = useState(Array(6).fill("")); // Initialize OTP with 6 empty fields
-  const [gotOtp, setGotOtp] = useState(false);
+  const [gotOtp, setGotOtp] = useState(true);
   const [laoding, setloading] = useState(false);
   const [isChecked, setIsChecked] = useState(true); // State to hold the checkbox status
 
@@ -242,7 +242,7 @@ function DetailFiller() {
     <div className="flex w-full relative md:py-[15vh] tb:pt-[18vh] pb-[0vh] pt-[20vh]  md:z-[2000] items-center justify-center min-h-screen bg-slate-100">
       {gotOtp && (
         <div className="fixed top-0  bg-black/40 left-0 w-full h-full flex items-center justify-center z-[2001]">
-          <div className=" relative flex flex-col items-center md:pt-10 md:pb-5  bg-b w-[40%] h-fit  rounded-xl md:z-[2001] ">
+          <div className=" relative flex flex-col items-center pb-5 pt-10 bg-b md:w-[40%] tb:w-[70%] w-[90%] rounded-sm h-fit  md:rounded-xl md:z-[2001] ">
             <RxCross1
               onClick={() => setGotOtp(false)}
               className="text-zinc-200 absolute top-2 right-2 text-2xl  "
@@ -267,7 +267,7 @@ function DetailFiller() {
               ))}
             </div>
             <div
-              className=" py-4 w-[70%] flex  justify-between px-10"
+              className=" py-4 md:w-[70%] tb:w-[40%] w-[80%] pt-10 md:pt-8 flex  justify-between md:px-10"
             >
               <button
               onClick={(e) => handleSubmit(e)}
