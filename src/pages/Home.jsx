@@ -10,28 +10,34 @@ import { fetchSliderImagesAsync } from "../redux/Slice/SliderIMGSlice";
 import AuthorityMap from "../components/AuthorityMap";
 import VisionMap from "../components/VisionMap";
 import Slider from "../components/Slider";
+import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
-
+const [data,setData]=useState([])
 
 
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.sliderIMG);
+  // const { data } = useSelector((state) => state.sliderIMG);
   const [isPaused, setIsPaused] = useState(false);
   const [dot, setDot] = useState(null);
 
-  
+  const fetchData = async ()=>{
+    const response = await axios.get(`${apiUrl}/api/auth/getSliderImages`);
+    setData(response.data.data)
+  }
   useEffect(() => {
-
-    dispatch(fetchSliderImagesAsync()); // Fetch images on component mount
-  }, [dispatch]);
+fetchData();
+    // dispatch(fetchSliderImagesAsync()); 
+  }, );
   useEffect(() => {
     if(data){
       return
     }
-    dispatch(fetchSliderImagesAsync()); // Fetch images on component mount
+    fetchData()
+    // dispatch(fetchSliderImagesAsync());
   },);
 
   
