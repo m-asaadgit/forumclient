@@ -895,7 +895,7 @@ function DetailFiller() {
             </div>
             <div className="   w-[50%] flex flex-col ">
               <input
-                type="text"
+                type="email"
                 id="email"
                 name="email"
                 placeholder="Your email"
