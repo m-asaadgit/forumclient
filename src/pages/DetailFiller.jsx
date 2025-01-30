@@ -14,6 +14,7 @@ function DetailFiller() {
   // const navigate = useNavigate();
   const [otpFiller, setOtpFiller] = useState(Array(6).fill("")); // Initialize OTP with 6 empty fields
   const [gotOtp, setGotOtp] = useState(false);
+  console.log(gotOtp)
   const [laoding, setloading] = useState(false);
   const [isChecked, setIsChecked] = useState(true); // State to hold the checkbox status
 
