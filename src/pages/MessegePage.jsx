@@ -13,6 +13,7 @@ import { fetchFeedback } from "../redux/Slice/feedbackSlice";
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 function MessegePage() {
   const { data, loading, error } = useSelector((state) => state.feedback);
+  data && console.log(data)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [seeDelete, setSeeDelete] = useState(null);
@@ -36,6 +37,12 @@ function MessegePage() {
 
     }
   };
+// useEffect(()=>{
+//   if(data){
+//     return
+//   }
+//   dispatch(fetchFeedback());
+// })
 
   useEffect(() => {
     dispatch(fetchFeedback());

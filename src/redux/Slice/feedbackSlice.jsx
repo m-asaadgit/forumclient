@@ -9,11 +9,13 @@ export const fetchFeedback = createAsyncThunk(
   "feedback/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `${apiUrl}/api/auth/getFeedback`,
-        { headers }
-      );
-      return response.data.data;
+      if (token) {
+        const response = await axios.get(
+          `${apiUrl}/api/auth/getFeedback`,
+          { headers }
+        );
+        return response.data.data;
+      } 
     } catch (error) {
       return rejectWithValue(
         error.response
@@ -23,6 +25,7 @@ export const fetchFeedback = createAsyncThunk(
     }
   }
 );
+
 
 const feedbackSlice = createSlice({
   name: "feedback",

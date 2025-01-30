@@ -24,21 +24,20 @@ const [data,setData]=useState([])
   const [isPaused, setIsPaused] = useState(false);
   const [dot, setDot] = useState(null);
 
-  const fetchData = async ()=>{
-    const response = await axios.get(`${apiUrl}/api/auth/getSliderImages`);
-    setData(response.data.data)
-  }
-  useEffect(() => {
-fetchData();
-    // dispatch(fetchSliderImagesAsync()); 
-  }, );
-  useEffect(() => {
-    if(data){
-      return
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/auth/getSliderImages`, {
+        timeout: 10000, // Set a timeout (10 seconds)
+      });
+      setData(response.data.data);
+    } catch (error) {
+      console.error(error.response?.message || error.message);
     }
-    fetchData()
-    // dispatch(fetchSliderImagesAsync());
-  },);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []); // Add an empty dependency array to prevent unnecessary calls
 
   
   useEffect(() => {
@@ -70,7 +69,7 @@ fetchData();
     >
       <div className="relative flex flex-col md:gap-6 justify-center w-full fit items-center">
         {dot}
- {    data.length>1 ? <Slider data={data} setDot={setDot} /> : <div
+ {    data.length>0 ? <Slider data={data} setDot={setDot} /> : <div
           className=" relative tb:rounded-lg bg-gray-900 aminate-pulse md:w-[70%] animate-pulse w-[100%] md:h-[65vh] h-[260px] tb:h-[500px] flex items-center justify-center  flex-shrink-0"
         >
           <div  className="w-[73%] h-[99%] bg-[#1b263b]  animate-pulse object-contain "  ></div>
