@@ -13,7 +13,7 @@ const apiUrl = import.meta.env.VITE_API_BASE_URL;
 function DetailFiller() {
   // const navigate = useNavigate();
   const [otpFiller, setOtpFiller] = useState(Array(6).fill("")); // Initialize OTP with 6 empty fields
-  const [gotOtp, setGotOtp] = useState(true);
+  const [gotOtp, setGotOtp] = useState(false);
   const [laoding, setloading] = useState(false);
   const [isChecked, setIsChecked] = useState(true); // State to hold the checkbox status
 
